@@ -75,6 +75,57 @@
                   <input type="text" id="gemeente" name="gemeente" title="de gemeente waar u woont" required>
                   <span class="fieldval" id="val_gemeente"></span>
               </div>
+              <div>
+                  <label for="land" class="verplicht">Land:</label>
+                  <select id="land" name="land" title="in welk land woont u?" required>
+                      <option value="1">Belgi&euml;</option>
+                      <option value="2">Nederland</option>
+                      <option value="3">Swaziland</option>
+                  </select>
+                  <span class="fieldval" id="val_land"></span>
+              </div>
+              <div>
+                  <label>
+                      <input type="tel" name="tel" id="tel" placeholder="uw telefoonnummer" title="uw vaste of mobiele telefoon">
+                  </label>
+                  <span class="fieldval" id="val_tel"></span>
+              </div>
+              <div>
+                  <label for="email" class="verplicht">Email</label>
+                  <input type="email" name="email" id="email" placeholder="uw emailadres" title="mijn emailadres" required>
+                  <span class="fieldval" id="val_email"></span>
+              </div>
+              <div>
+                  <label for="geboren">Geboortedatum</label>
+                  <input type="date" name="geboren" id="geboren" title="uw geboortedatum in het formaat 1956-12-31" required>
+                  <span class="fieldval" id="val_geboren"></span>
+              </div>
+              
+              <div>
+                  <label>Geslacht:</label>
+                  <input type="radio" name="sexe" id="man" value="m">
+                  <label class="labelRadio" for="man">Man</label>
+                  <input type="radio" name="sexe" id="vrouw" value="v" title="uw geslacht">
+                  <label class="labelRadio" for="vrouw">Vrouw</label>
+                  <span class="fieldval" id="val_sexe"></span>
+              </div>
+              <div>
+                  <label for="vragen">Hebt u nog vragen?</label>
+                  <textarea name="vragen" id="vragen" placeholder="vragen?" title="Heeft u nog vragen?"></textarea>
+                  <span class="fieldval" id="val_vragen"></span>
+              </div>
+              <div><label class="labelCheckbox"><input type="checkbox" id="actiesmail" value name="kortingen">ik wens per mail
+              op de hoogte gehouden te worden van kortingen en acties van De Gazet</label></div>
+              <div><label class="labelCheckbox"><input type="checkbox" value name="actiespost" id="actiespost">ik wens per post
+              op de hoogte gehouden te worden van kortingen en acties van De Gazet</label></div>
+              <div>Lees alstublief onze
+                  <a href="">Privacy Richtlijnen</a> om alles te weten te komen hoe wij uw gegevens gebruiken.
+                  <br>
+                  U moet ook onze <a href="#">Algemene VerkoopsVoorwaarden</a> lezen en ermee akkoord gaan.
+                  U moet deze checkbox
+                  <input type="checkbox" value name="akkoord" id="akkoord"> aanvinken om toe te stemmen met de algemene verkoopsvoorwaarden.
+              </div> 
+              <div><input class="blauw" type="submit" value="Bevestig"><input class="blauw" type="reset" value="Herbegin"></div>
           </form>
         </div>
       </article>
