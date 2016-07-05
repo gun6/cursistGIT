@@ -100,3 +100,144 @@ article h2 {
 .span5>h2 {
     margin-right: 0;
 }
+/*clearfix hack http://nicolasgallagher.com/micro-clearfix-hack/*/
+.clearFix:before, .clearFix:after {
+    content: " ";
+    display: table;
+}
+.clearFix:after {
+    clear: both;
+}
+/*enkel voor IE6/7*/
+.clearFix {
+    *zoom: 1;
+}
+/*ARTICLE en SECTION OPMAAK*/
+/*duidelijke grijze title, rode bovenrand*/
+.metTitel {
+    padding-top: 0;
+}
+.metTitel>h2 {
+    background: #EDEDED;
+    border-top: 3px solid #D61D00;
+    margin: 0 20px 0.8em 0;
+    padding: 0.8em 0 0.8em 0.4em;
+}
+/*verborgen titel, enkel voor outline*/
+.verbergTitel>h2 {
+    display: none;
+}
+article.toparticle>h2 {
+    font-size: 1.5em;
+}
+#andernieuws article>h2 {
+    font-size: 1.125em;
+    margin: 0.125em 0;
+}
+/*TOPMENU*/
+#topmenu {
+    text-align: right;
+}
+#topmenu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#topmenu ul li {
+    display: inline;
+}
+#topmenu ul li a {
+    display: inline-block;
+    width: 7em;
+    padding: 0.2em;
+    font-size: 0.8em;
+    font-style: italic;
+    color: #499BAB;
+    text-decoration: none;
+}
+#topmenu ul li a:hover, #topmenu ul li a:active {
+    color: #005689;
+    text-decoration: none;
+}
+/*EXTRAMENU*/
+#extramenu {
+    border-bottom: 1px solid #bebebe;
+    height: 1.375em
+}
+#extramenu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#extramenu ul li {
+    display: inline;
+}
+#extramenu ul li a {
+    display: inline-block;
+    padding: 0.2em;
+    font-size: 0.9em;
+    color: #cccccc;
+    text-decoration: none;
+}
+#extramenu ul li a:hover, #extramenu ul li a:active {
+    color: #505050;
+    text-decoration: none;
+}
+/*HOOFDMENU*/
+#hoofdmenu {
+    background: #ededed;
+}
+#hoofdmenu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+#hoofdmenu ul li {
+    float: left;
+}
+#hoofdmenu ul li a {
+    display:block;
+    padding: 0.375em 0.5em;
+    border-right: 1px solid #b1b1b1;
+    letter-spacing: 0.1em;
+    color: #005689;
+    text-decoration: none;
+}
+#hoofdmenu ul li a:hover, #hoofdmenu ul li a:active, #hoofdmenu ul li a.actief {
+    text-decoration: none;
+    background: #d61d00;
+    color: white;
+}
+/*Heet van de naald*/
+#heet {
+    padding: 6px 0;
+}
+#heetvandenaald {
+    font-weight: bold;
+    color: #d61d00;
+    padding-right: 1em;
+}
+/*Logo image replacement #logo = h1*/
+#logo a{
+    display: block;
+    width: 346px;
+    height: 77px;
+    margin: 14px 0 20px 0;
+    background: transparent url(../img/degazet.png) no-repeat;
+    text-indent: -99999px;
+}
+/*BORDERS*/
+/*default kleur rood*/
+.bt8 {
+    border-top: 8px solid #d61d00;
+}
+.bt3 {
+    border-top: 3px solid #d61d00;
+}
+.bb8 {
+    border-bottom: 8px solid #d61d00;
+}
+.bb3 {
+    border-bottom: 3px solid #d61d00;
+}
