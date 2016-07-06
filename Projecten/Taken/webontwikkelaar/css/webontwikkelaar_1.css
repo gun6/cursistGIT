@@ -1,0 +1,161 @@
+@charset "utf-8";
+/* ALGEMEEN */
+div {
+	margin:0;
+	padding:0;
+	}
+body {
+	background: #FFF;
+	color: #665950;
+	font: small Arial, sans-serif;
+	width:100%;
+    margin: 0 auto;
+}
+a img {
+	border: 0;
+}
+ul {
+	margin: 0;
+	padding: 1em;
+}
+ /* HEADER */
+header {
+        background-color: #8fb209;
+    }
+.header {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+header form {
+    float: right;
+}
+header form label {
+    color: white;
+}
+/* HOOFD */
+#logo {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    float: left;
+}
+.hoofd_wrap {
+        border-bottom: 1px solid #dcdad8;
+}
+.hoofd {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.hoofdmenu {
+    margin-right: 0;
+}
+.hoofdmenu ul {
+    float: right;
+    width: 27.5%;
+    list-style: none;
+    margin-right: 0;
+}
+.hoofdmenu ul li {
+    float: left;
+    display: inline-block;
+    margin: 25.7% 0 0 4%;
+}
+.hoofdmenu ul li a {
+    text-decoration: none;
+    margin-right: 0;
+    color: #4C86cf;
+}
+.hoofdmenu ul li a:hover {
+    color: #058;
+}
+/* INHOUD */
+/* TITELSTUK */
+.titelstuk {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1%;
+    overflow: auto;
+}
+.titelstuk img {
+    padding: 1%;
+    background-color: #e9dce9;
+    float: right;
+}
+.titelstuk h1 {
+    color: #7ea107;
+    font-size: 4em;
+}
+/* MIDDEN */
+.midden {
+    margin-top: 1%;
+    background-color: #ebe8e5;
+}
+.midden_wrap {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.midden img {
+    margin: -2em 1em 1em 0;
+    padding: 1%;
+    background-color: #e9dce9;
+    float: left;
+}
+.midden .midden_wrap ul {
+    list-style-image: url(../img/check.png);
+    float: left;
+}
+.midden .midden_wrap ul li {
+    width: 31%;
+    height: 6em;
+    margin-top: 1%;
+    margin-right: 2%;
+    float: left;
+}
+/* NIEUWS */
+.nieuws {
+     width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.nieuws h3 {
+    color: black;
+}
+.datum {
+    font-size: 0.7em;
+}
+.nieuws article {
+    width: 31%;
+    margin-right: 2%;
+    float: left;
+}
+.nieuws img {
+    margin-right: 8%;
+    float: right;
+    height: 5%;
+    width: 5%;
+}
+/* FOOTER */
+footer {
+    background-color: #fcfaf8;
+    border-top: 1px  solid #dcdad8;
+}
+.footer {
+     width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* clearfix hack */
+.clearFix:before, .clearFix:after {
+    content: " ";
+    display: table;
+}
+.clearFix:after {
+    clear: both;
+}
+/*enkel voor IE6/7*/
+.clearFix {
+    *zoom: 1;
+}

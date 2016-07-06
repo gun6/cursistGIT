@@ -1,0 +1,30 @@
+/* UL.thumblist */
+.thumblist {
+    width: 100%;
+    margin: 0;
+    padding: 0.5em 0;
+    background: #eee;
+    list-style: none;
+    font-size: 0.75em;
+}
+.thumblist li {
+    border: 1px dashed silver;
+    padding: 0.5em;
+    margin: 0.5em;
+}
+.thumblist img {
+    float: left;
+    margin-right: 0.5em;
+}
+.thumblist a {
+    color: inherit;
+    text-decoration: none;
+}
+.thumblist h4 {
+    font-size: 1.16666em;
+    margin: 0 0 0.1em 0;
+    color: #0099ff;
+}
+.thumblist p {
+    margin: 0 0 0.1em 0;
+}
