@@ -76,12 +76,16 @@ header form label {
     margin-left: auto;
     margin-right: auto;
     margin-top: 1%;
-    overflow: auto;
+    margin-bottom: 7%;
+    overflow: visible;
 }
 .titelstuk img {
     padding: 1%;
+    margin-bottom: -1em;
     background-color: #e9dce9;
     float: right;
+    transform: rotate(5deg);
+    box-shadow: rgba(0,0,0,0.4) 10px 10px 7px;
 }
 .titelstuk h1 {
     color: #7ea107;
@@ -102,6 +106,8 @@ header form label {
     padding: 1%;
     background-color: #e9dce9;
     float: left;
+    transform: rotate(-5deg);
+    box-shadow: rgba(0,0,0,0.4) 10px 10px 7px;
 }
 .midden .midden_wrap ul {
     list-style-image: url(../img/check.png);
