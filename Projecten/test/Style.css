@@ -1,0 +1,190 @@
+@charset "utf-8";
+/* ALGEMEEN */
+.wrapper{
+	color: #665950;
+	font-family: serif;
+	width:100%;
+    margin: 0 auto;
+}
+h2{
+    color: #d64708;
+    font-size: 1.5em;
+}
+em{
+    color: #9a3098;
+    letter-spacing: 2px;
+    font-size: 1.25em;
+}
+ /* HEADER */
+header {
+        background-color: #d64708;
+        width: 100%;
+}
+.hoofdmenu ul {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    list-style: none;
+}
+.hoofdmenu ul li {
+    float: left;
+    text-align: center;
+    display: inline-block;
+    width: 18%;
+    border-right: 1px solid #fff;
+    margin: 0;
+    padding: 0.75em 0.5em;
+    overflow: visible
+}
+.hoofdmenu ul li:first-child{
+    border-left: 1px solid #fff;
+}
+.hoofdmenu ul li a {
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    padding: 0.5em;
+}
+.hoofdmenu ul li a:hover {
+    background-color: #b61600;
+}
+/* section one */
+.one{
+    height: 25em;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.logo{
+    float: right;
+}
+.one h1{
+    color: #00735d;
+    font-size: 3em;
+}
+.one ul{
+    list-style: none;
+}
+.one li{
+    margin: 1.5em 0;
+}
+.one li a{
+    background-color: #d64708;
+    border: 1px solid #d64700;
+    border-radius: 2em;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    text-decoration: none;
+    color: white;
+}
+.one li a:hover{
+    background-color: #00735d;
+}
+/* section two */
+.two{
+    border-top: 1px solid #665950;
+    height: 35em;
+    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.two a{
+    text-decoration: none;
+}
+.two a:hover{
+    text-decoration: underline;
+}
+.links{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    max-width: 23%;
+}
+.rechts{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    max-width: 23%;
+    float: right;
+}
+.breed{
+    max-width: 48%;
+    overflow: hidden;
+    float: left;
+    height: 30em;
+    background-image: url(1397656082965_htmlcss_test_level2/htmlcss_test_level2/img/drupal-8.png);
+    background-size: 95%;
+    background-origin: border-box;
+    background-repeat: no-repeat;
+}
+/* section three */
+.three{
+    border-top: 1px solid #665950;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+}
+.thumblist{
+    width: 100%;
+    margin: 0;
+    padding: 0.5em 0;
+    list-style: none;
+    font-size: 0.75em;
+}
+.thumblist li{
+    padding: 0.5em;
+    margin: 0.5em;
+    height: 10em;
+    overflow: hidden;
+}
+.thumblist img{
+    float: left;
+    margin-right: 0.5em;
+}
+.thumblist h3{
+    
+}
+.thumblist p{
+    margin: 0 0 0.1em 0;
+}
+/* footer */
+footer{
+    background-color: #303f43;
+}
+.footer{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+footer a{
+    text-decoration: none;
+    color: #00735d;
+}
+footer a:hover{
+    text-decoration: underline;
+    color: #9a3098;
+}
+footer p{
+    color: white;
+    float: left;
+    margin-left: 1.5em;
+}
+footer date{
+    background: white;
+    float: right;
+    margin-top: 1em;
+    margin-right: 1.5em;
+    color: #303f43;
+    padding: 0.10em;
+}
+/* clearfix hack */
+.clearFix:before, .clearFix:after {
+    content: " ";
+    display: table;
+}
+.clearFix:after {
+    clear: both;
+}
+/*enkel voor IE6/7*/
+.clearFix {
+    *zoom: 1;
+}
