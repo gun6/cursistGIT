@@ -3,16 +3,26 @@ package be.vdab.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import be.vdab.enums.Geslacht;
+import be.vdab.valueobjects.TelefoonNr;
 
 @Entity
 @Table (name = "docenten")
@@ -24,9 +34,18 @@ public class Docent implements Serializable{
 	private String voornaam;
 	private String familienaam;
 	private BigDecimal wedde;
-	private long rijksregisterNr;
+	private long rijksRegisterNr;
 	@Enumerated (EnumType.STRING)
 	private Geslacht geslacht;
+	@ElementCollection
+	@CollectionTable(name = "docentenbijnamen",
+							joinColumns = @JoinColumn(name = "docentid"))
+	@Column(name = "Bijnaam")
+	private Set<String> bijnamen;
+	@ManyToOne(fetch = FetchType.LAZY,optional = false)
+	@JoinColumn(name = "campusid")
+	private Campus campus;
+							
 	
 	
 	public Docent(String voornaam, String familienaam, BigDecimal wedde, long rijksregisterNr,
@@ -34,8 +53,9 @@ public class Docent implements Serializable{
 		this.voornaam = voornaam;
 		this.familienaam = familienaam;
 		this.wedde = wedde;
-		this.rijksregisterNr = rijksregisterNr;
+		this.rijksRegisterNr = rijksregisterNr;
 		this.geslacht = geslacht;
+		bijnamen = new HashSet<>();
 	}
 	
 	protected Docent() {}
@@ -102,14 +122,14 @@ public class Docent implements Serializable{
 	}
 	
 	public long getRijksregisterNr() {
-		return rijksregisterNr;
+		return rijksRegisterNr;
 	}
 	
 	public void setRijksregisterNr(long rijksregisterNr) {
 		if (! isRijksregisterNrValid(rijksregisterNr)) {
 			throw new IllegalArgumentException();
 		}
-		this.rijksregisterNr = rijksregisterNr;
+		this.rijksRegisterNr = rijksregisterNr;
 	}
 	
 	public String getNaam() {
@@ -127,6 +147,45 @@ public class Docent implements Serializable{
 	public void opslag(BigDecimal percentage) {
 		BigDecimal factor = BigDecimal.ONE.add(percentage.divide(BigDecimal.valueOf(100)));
 		wedde = wedde.multiply(factor).setScale(2, RoundingMode.HALF_UP);
+	}
+
+	public Set<String> getBijnamen() {
+		return Collections.unmodifiableSet(bijnamen);
+	}
+	
+	public void addBijnaam(String bijnaam) {
+		bijnamen.add(bijnaam);
+	}
+	
+	public void removeBijnaam(String bijnaam) {
+		bijnamen.remove(bijnaam);
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if (!(obj instanceof Docent)) {
+			return false;
+		}
+		return ((Docent) obj).rijksRegisterNr == rijksRegisterNr;
+	}
+	
+	@Override
+	public int hashCode(){
+		return Long.valueOf(rijksRegisterNr).hashCode();
+	}
+	
+	public Campus getCampus() {
+		return campus;
+	}
+
+	public void setCampus(Campus campus) {
+		if (this.campus != null && this.campus.getDocenten().contains(this)) {
+			this.campus.remove(this);
+		}
+		this.campus = campus;
+		if (campus != null && ! campus.getDocenten().contains(this)) {
+			campus.add(this);
+		}
 	}
 	
 	

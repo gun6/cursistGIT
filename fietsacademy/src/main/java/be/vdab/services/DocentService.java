@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import be.vdab.entities.Docent;
+import be.vdab.exceptions.DocentBestaatAlException;
 import be.vdab.repositories.DocentRepository;
 import be.vdab.valueobjects.AantalDocentenPerWedde;
 import be.vdab.valueobjects.VoornaamEnId;
@@ -16,6 +17,9 @@ public class DocentService extends AbstractService {
 	}
 	
 	public void create(Docent docent) {
+		if (docentRepository.findByRijksRegisterNr(docent.getRijksregisterNr()) != null) {
+			throw new DocentBestaatAlException();
+		}
 		beginTransaction();
 		docentRepository.create(docent);
 		commit();
@@ -54,6 +58,21 @@ public class DocentService extends AbstractService {
 		BigDecimal factor = BigDecimal.ONE.add(percentage.divide(BigDecimal.valueOf(100)));
 		beginTransaction();
 		docentRepository.algemeneOpslag(factor);
+		commit();
+	}
+	
+	public void bijnaamToevoegen(long id,String bijnaam) {
+		beginTransaction();
+		docentRepository.read(id).addBijnaam(bijnaam);
+		commit();
+	}
+	
+	public void bijnamenVerwijderen(long id,String[] bijnamen) {
+		beginTransaction();
+		Docent docent = docentRepository.read(id);
+		for (String bijnaam : bijnamen) {
+			docent.removeBijnaam(bijnaam);
+		}
 		commit();
 	}
 }

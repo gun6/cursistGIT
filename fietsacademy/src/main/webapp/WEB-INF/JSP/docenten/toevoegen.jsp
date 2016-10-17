@@ -16,6 +16,10 @@
 			<div><label><span>${fouten.geslacht}</span><input type="radio" name="geslacht" value="MAN" ${param.geslacht=="MAN" ? "checked" : ""}/>Man</label></div>
 			<div><label><span>${fouten.geslacht}</span><input type="radio" name="geslacht" value="VROUW" ${param.geslacht=="VROUW" ? "checked" : ""}/>Vrouw</label></div>
 			<label>Rijksregisternummer:<span>${fouten.rijksregisterNr}</span><input name="rijksregisternr" value="${param.rijksregisternr}" required type="number" min="10000000000" max="99999999999"/></label>
+			<label>Campus: <span>${fouten.campussen}</span><select name="campussen" size="${campussen.size()}" required="required">
+				<c:forEach items="${campussen}" var="campus">
+					<option value="${campus.id}" ${campus.id == param.campussen ? 'selected' : ''}>${campus.naam} (${campus.adres.gemeente})</option>
+				</c:forEach></select></label>
 			<input type="submit" value="Toevoegen" id="toevoegknop">
 		</form>
 		<script>
