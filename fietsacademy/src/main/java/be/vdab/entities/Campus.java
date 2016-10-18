@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.net.ssl.ManagerFactoryParameters;
 import javax.persistence.*;
 
 import be.vdab.valueobjects.Adres;
@@ -30,6 +31,9 @@ public class Campus implements Serializable {
 	//@JoinColumn(name = "campusid")
 	@OrderBy("voornaam,familienaam")
 	private Set<Docent> docenten;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "managerid")
+	private Manager manager;
 
 	protected Campus() {}
 	
@@ -67,6 +71,10 @@ public class Campus implements Serializable {
 
 	public void setAdres(Adres adres) {
 		this.adres = adres;
+	}
+	
+	public Manager getManager() {
+		return manager;
 	}
 
 	public Set<TelefoonNr> getTelefoonNrs() {

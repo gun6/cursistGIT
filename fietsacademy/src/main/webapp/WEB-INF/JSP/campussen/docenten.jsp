@@ -10,7 +10,7 @@
 	<body>
 		<v:menu/>
 		<h1>Docenten per campus</h1>
-		<ul>
+		<ul class="zonderbolletjes">
 			<c:forEach items="${campussen}" var="campus">
 				<c:url value="" var="url">
 					<c:param name="id" value="${campus.id}"/>

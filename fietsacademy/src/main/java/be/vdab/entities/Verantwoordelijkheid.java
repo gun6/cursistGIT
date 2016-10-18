@@ -52,8 +52,8 @@ public class Verantwoordelijkheid implements Serializable {
 	
 	@ManyToMany
 	@JoinTable(name= "docentenverantwoordelijkheden",
-				joinColumns = @JoinColumn(name= "verantwoodelijkheidid"),
-				inverseJoinColumns = @JoinColumn(name = "docentid"))
+				joinColumns = @JoinColumn(name= "verantwoordelijkheidId"),
+				inverseJoinColumns = @JoinColumn(name = "docentId"))
 	private Set<Docent> docenten = new LinkedHashSet<>();
 	
 	public void add(Docent docent) {
