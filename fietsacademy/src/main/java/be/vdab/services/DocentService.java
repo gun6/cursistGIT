@@ -3,14 +3,20 @@ package be.vdab.services;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.OptimisticLockException;
+import javax.persistence.RollbackException;
+
 import be.vdab.entities.Docent;
 import be.vdab.exceptions.DocentBestaatAlException;
+import be.vdab.exceptions.RecordAangepastException;
+import be.vdab.repositories.CampusRespository;
 import be.vdab.repositories.DocentRepository;
 import be.vdab.valueobjects.AantalDocentenPerWedde;
 import be.vdab.valueobjects.VoornaamEnId;
 
 public class DocentService extends AbstractService {
 	private final DocentRepository docentRepository = new DocentRepository();
+	private final CampusRespository campusRespository = new CampusRespository();
 	
 	public Docent read(long id) {
 		return docentRepository.read(id);
@@ -34,7 +40,14 @@ public class DocentService extends AbstractService {
 	public void opslag(long id,BigDecimal percentage) {
 		beginTransaction();
 		docentRepository.read(id).opslag(percentage);
-		commit();
+		try {
+			commit();
+		} catch (RollbackException ex) {
+			if (ex.getCause() instanceof OptimisticLockException) {
+				throw new RecordAangepastException();
+			}
+		}
+		
 
 	}
 	
@@ -74,5 +87,9 @@ public class DocentService extends AbstractService {
 			docent.removeBijnaam(bijnaam);
 		}
 		commit();
+	}
+	
+	public List<Docent> findBestBetaaldeVanEenCampus(long id) {
+		return docentRepository.findBestBetaaldeVanEenCampus(campusRespository.read(id));
 	}
 }
