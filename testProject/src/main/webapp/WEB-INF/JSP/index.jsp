@@ -4,9 +4,11 @@
 <!doctype html>
 <html lang='nl'>
 	<head>
-
+		<v:head title="Alles voor de keuken"/>
 	</head>
 	<body>
-	
+		<v:menu/>
+		<h1>Alles voor de keuken</h1>
+		<img alt="logo" src='<c:url value="/images/logo${randomnr}.jpg"/>'>
 	</body>
 </html>

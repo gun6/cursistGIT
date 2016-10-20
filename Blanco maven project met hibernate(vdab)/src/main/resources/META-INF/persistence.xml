@@ -4,9 +4,9 @@
 	xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
 	xsi:schemaLocation='http://xmlns.jcp.org/xml/ns/persistence
 	http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/persistence_2_1.xsd'>
-	<persistence-unit name=''>
+	<persistence-unit name='*?*'>
 		<non-jta-data-source>
-			java:/comp/env/jdbc/
+			java:/comp/env/jdbc/*?*
 		</non-jta-data-source> 
 		
 		<properties>
