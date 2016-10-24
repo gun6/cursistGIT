@@ -10,5 +10,9 @@
 	<body>
 		<v:menu/>
 		<h1>Prijsverhoging</h1>
+		<form method="post">
+			<label>Percentage: <span>${fouten.percentage}</span><input name="percentage" value="${param.percentage}" type="number" min="0.01" step="0.01" autofocus="autofocus"></label>
+			<input type="submit" value="Verhoog prijzen">
+		</form>
 	</body>
 </html>

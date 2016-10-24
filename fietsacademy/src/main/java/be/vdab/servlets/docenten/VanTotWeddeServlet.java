@@ -25,7 +25,7 @@ public class VanTotWeddeServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// voorlopig met dummy waarden
+
 		if (request.getQueryString() == null){
 			request.setAttribute("tot",docentService.findMaxWedde());
 		}

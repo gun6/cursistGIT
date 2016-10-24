@@ -6,8 +6,10 @@ import java.math.BigDecimal;
 
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name="artikels")
-public class Artikel implements Serializable {
+@DiscriminatorColumn(name = "soort")
+public abstract class Artikel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -20,15 +22,18 @@ public class Artikel implements Serializable {
 
 	private BigDecimal verkoopprijs;
 
-	public Artikel() {
+	protected Artikel() {
+	}
+
+	public Artikel(BigDecimal aankoopprijs, String naam, BigDecimal verkoopprijs) {
+		super();
+		setAankoopprijs(aankoopprijs);
+		setNaam(naam);
+		setVerkoopprijs(aankoopprijs,verkoopprijs);
 	}
 
 	public long getId() {
 		return this.id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public BigDecimal getAankoopprijs() {
@@ -36,6 +41,9 @@ public class Artikel implements Serializable {
 	}
 
 	public void setAankoopprijs(BigDecimal aankoopprijs) {
+		if (! isAankoopprijsValid(aankoopprijs)) {
+			throw new IllegalArgumentException();
+		}
 		this.aankoopprijs = aankoopprijs;
 	}
 
@@ -44,6 +52,9 @@ public class Artikel implements Serializable {
 	}
 
 	public void setNaam(String naam) {
+		if (! isNaamValid(naam)) {
+			throw new IllegalArgumentException();
+		}
 		this.naam = naam;
 	}
 
@@ -51,8 +62,47 @@ public class Artikel implements Serializable {
 		return this.verkoopprijs;
 	}
 
-	public void setVerkoopprijs(BigDecimal verkoopprijs) {
+	public void setVerkoopprijs(BigDecimal aankoopprijs,BigDecimal verkoopprijs) {
+		if (! isVerkoopprijsValid(aankoopprijs, verkoopprijs)) {
+			throw new IllegalArgumentException();
+		}
 		this.verkoopprijs = verkoopprijs;
 	}
+	
+	public static boolean isNaamValid(String naam) {
+		return naam != null && ! naam.isEmpty();
+	}
+	
+	public static boolean isAankoopprijsValid(BigDecimal prijs) {
+		return prijs.compareTo(BigDecimal.valueOf(0.01)) >= 0;
+	}
+	
+	public static boolean isVerkoopprijsValid(BigDecimal aankoopprijs,BigDecimal verkoopprijs) {
+		return verkoopprijs.compareTo(aankoopprijs) >= 0;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Artikel))
+			return false;
+		Artikel other = (Artikel) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
 
 }
