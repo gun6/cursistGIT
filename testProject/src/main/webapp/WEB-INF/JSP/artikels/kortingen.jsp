@@ -10,5 +10,17 @@
 	<body>
 		<v:menu/>
 		<h1>Kortingen</h1>
+		<ul>
+			<c:forEach items="${artikels}" var="artikel">
+				<li><a href='<c:url value =''><c:param name = "id" value="${artikel.id}"/></c:url>'>${artikel.naam}</a></li>
+				<c:if test="${artikel.id == param.id}">
+					<ul>
+						<c:forEach items="${artikel.kortingen}" var="korting">
+							<li>${korting}</li>
+						</c:forEach>
+					</ul>
+				</c:if>
+			</c:forEach>
+		</ul>
 	</body>
 </html>

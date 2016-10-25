@@ -10,5 +10,17 @@
 	<body>
 		<v:menu/>
 		<h1>Per artikelgroep</h1>
+		<ul>
+			<c:forEach items="${groepen}" var="groep">
+				<li><a href='<c:url value =''><c:param name = "id" value="${groep.id}"/></c:url>'>${groep.naam}</a></li>
+				<c:if test="${groep.id == param.id}">
+					<ul>
+						<c:forEach items="${groep.artikels}" var="artikel">
+							<li>${artikel.id} ${artikel.naam} ${artikel.verkoopprijs}</li>
+						</c:forEach>
+					</ul>
+				</c:if>
+			</c:forEach>
+		</ul>
 	</body>
 </html>

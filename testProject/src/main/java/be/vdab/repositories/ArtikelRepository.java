@@ -3,7 +3,10 @@ package be.vdab.repositories;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import be.vdab.entities.Artikel;
+import be.vdab.entities.Artikelgroepen;
 
 public class ArtikelRepository extends AbstractRepository{
 	
@@ -27,5 +30,29 @@ public class ArtikelRepository extends AbstractRepository{
 		getEntityManager().createNamedQuery("Artikel.prijsverhoging")
 		.setParameter("factor", factor)
 		.executeUpdate();
+	}
+	
+	public List<Artikel> findAllOrderByName() {
+		return getEntityManager().createNamedQuery("Artikel.findAllOrderByName", Artikel.class).getResultList();
+		
+	}
+	
+	public Artikel findByExactName(String naam) {
+		try {
+			return getEntityManager().createNamedQuery("Artikel.findByExactName", Artikel.class)
+					.setParameter("naam", naam)
+					.getSingleResult();
+		} 
+		catch (NoResultException ex) {
+			return null;
+		}
+	}
+	
+	public List<Artikelgroepen> findAll() {
+		return getEntityManager().createNamedQuery("Artikelgroepen.findAll", Artikelgroepen.class).getResultList();
+	}
+	
+	public Artikelgroepen getArtikelgroep(long id) {
+		return getEntityManager().find(Artikelgroepen.class, id);
 	}
 }
