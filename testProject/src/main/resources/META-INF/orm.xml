@@ -39,4 +39,9 @@
 				 		select a from Artikel a
 				 	</query>
 				 </named-query>
+				 <named-query name='Artikel.test'>
+				 	<query>
+				 		select a.naam,a.artikelgroepen.naam from Artikel a 
+				 	</query>
+				 </named-query>
 </entity-mappings>
