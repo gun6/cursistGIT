@@ -7,6 +7,7 @@ import be.vdab.entities.Artikel;
 import be.vdab.entities.Artikelgroepen;
 import be.vdab.exceptions.ArtikelBestaatAlException;
 import be.vdab.repositories.ArtikelRepository;
+import be.vdab.valueobjects.ArtikelLijstObject;
 
 public class ArtikelService extends AbstractService{
 	private final ArtikelRepository artikelRepository = new ArtikelRepository();
@@ -45,5 +46,9 @@ public class ArtikelService extends AbstractService{
 	
 	public Artikelgroepen getArtikelgroep(long id){
 		return artikelRepository.getArtikelgroep(id);
+	}
+	
+	public List<Artikel> getLijst(){
+		return artikelRepository.getLijst();
 	}
 }

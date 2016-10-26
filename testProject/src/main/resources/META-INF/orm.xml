@@ -34,4 +34,9 @@
 						order by a.naam
 				 	</query>
 				 </named-query>
+				 <named-query name='Artikel.getLijst'>
+				 	<query>
+				 		select a from Artikel a
+				 	</query>
+				 </named-query>
 </entity-mappings>

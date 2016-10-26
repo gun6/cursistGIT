@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 
 import be.vdab.entities.Artikel;
 import be.vdab.entities.Artikelgroepen;
+import be.vdab.valueobjects.ArtikelLijstObject;
 
 public class ArtikelRepository extends AbstractRepository{
 	
@@ -54,5 +55,12 @@ public class ArtikelRepository extends AbstractRepository{
 	
 	public Artikelgroepen getArtikelgroep(long id) {
 		return getEntityManager().find(Artikelgroepen.class, id);
+	}
+	
+	public List<Artikel> getLijst() {
+		return getEntityManager()
+				.createNamedQuery("Artikel.getLijst", Artikel.class)
+				.setHint("javax.persistence.loadgraph", getEntityManager().createEntityGraph("Artikel.metArtikelgroep"))
+				.getResultList();
 	}
 }

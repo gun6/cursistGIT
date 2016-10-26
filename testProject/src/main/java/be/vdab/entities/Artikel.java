@@ -15,6 +15,7 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name="artikels")
 @DiscriminatorColumn(name = "soort")
+@NamedEntityGraph(name = "Artikel.metArtikelgroep",attributeNodes = @NamedAttributeNode("artikelgroepen"))
 public abstract class Artikel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
