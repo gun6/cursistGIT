@@ -8,5 +8,24 @@
     </head>
     <body>
 		<h1>Albums</h1>
+		<table>
+			<thead>
+				<tr>
+					<th>Album</th>
+					<th>Artiest</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${indexLijst}" var="item">
+				<c:url value="/detail.htm" var="detailURL">
+					<c:param name="id" value="${item.id}"/>
+				</c:url>
+					<tr>
+						<td><a href="${detailURL}">${item.naam}</a></td>
+						<td>${item.artiesten.naam}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
     </body>
 </html>

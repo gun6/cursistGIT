@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import be.vdab.services.AlbumService;
 
-@WebServlet("/index.htm")
-public class IndexServlet extends HttpServlet {
+
+@WebServlet("/detail.htm")
+public class DetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String VIEW = "/WEB-INF/JSP/index.jsp";
+	private static final String VIEW = "/WEB-INF/JSP/detail.jsp";
 	private final transient AlbumService albumService = new AlbumService();
 
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("indexLijst", albumService.getAlbumsMetArtiest());
+		request.setAttribute("album", albumService.getAlbumMetArtiestEnTracks(Long.parseLong(request.getParameter("id"))));
 		request.getRequestDispatcher(VIEW).forward(request, response);
 	}
-
+	
 }

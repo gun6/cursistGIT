@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 public class Track implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
 	private String naam;
 
 	private BigDecimal tijd;

@@ -3,10 +3,15 @@
 				 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm 
 				 http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
-				 <!--
-				 <named-query name=*?*''>
+				 <named-query name="Album.findall">
 				 	<query>
-				 		  *?*
+				 		  select a from Album a
 				 	</query>
-				 -->
+				 </named-query>
+				 <named-query name="Album.findone">
+				 	<query>
+				 		  select a from Album a
+				 		  where a.id = :id
+				 	</query>
+				 </named-query>
 </entity-mappings>

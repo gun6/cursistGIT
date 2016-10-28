@@ -1,6 +1,8 @@
 package be.vdab.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,12 +13,16 @@ import java.util.Set;
  */
 @Entity
 @Table(name="albums")
-@NamedQuery(name="Album.findAll", query="SELECT a FROM Album a")
+@NamedEntityGraphs({
+@NamedEntityGraph(name = "Album.metArtiest",attributeNodes = @NamedAttributeNode("artiesten")),
+@NamedEntityGraph(name = "Album.metArtiestEnTracks",attributeNodes = { @NamedAttributeNode("artiesten"), @NamedAttributeNode("tracks")})
+})
 public class Album implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
 	private String naam;
 
@@ -32,11 +38,11 @@ public class Album implements Serializable {
 	public Album() {
 	}
 
-	public int getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -76,6 +82,14 @@ public class Album implements Serializable {
 		track.setAlbum(null);
 
 		return track;
+	}
+	
+	public BigDecimal getTijd() {
+		BigDecimal tijd = BigDecimal.ZERO;
+		for (Track track : tracks) {
+			tijd=tijd.add(track.getTijd());
+		}
+		return tijd;
 	}
 
 }
