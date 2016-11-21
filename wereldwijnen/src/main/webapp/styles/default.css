@@ -3,8 +3,17 @@ body {
 	font-family: sans-serif;
 }
 
+.menu {
+	background-image: url("../images/intro.jpg");
+}
+
+.menu h1 {
+	text-align: center;
+	color: white;
+}
+
+
 nav {
-	background: #F5F5F5;
 	height: 1.8em;
 	font-size: large;
 }
@@ -20,7 +29,7 @@ nav ul,nav ul li ul {
 }
 
 nav>ul>li {
-	background-color: #F5F5F5;
+
 	float: left;
 	position: relative;
 }

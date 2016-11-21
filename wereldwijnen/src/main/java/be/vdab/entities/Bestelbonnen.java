@@ -33,7 +33,7 @@ public class Bestelbonnen implements Serializable {
 	private String straat;
 	
 	@ElementCollection
-	@CollectionTable(name = "bestelbonlijnen",joinColumns = @JoinColumn(name = "bonid"))
+	//@CollectionTable(name = "bestelbonlijnen",joinColumns = @JoinColumn(name = "bonid"))
 	@OrderBy("wijnid")
 	private Set<Bestelbonlijnen> bestelbonlijnen;
 

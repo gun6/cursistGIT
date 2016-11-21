@@ -7,6 +7,6 @@
     	<v:head title="Wereldwijnen"></v:head>
     </head>
     <body>
-	
+		<v:menu/>
     </body>
 </html>
