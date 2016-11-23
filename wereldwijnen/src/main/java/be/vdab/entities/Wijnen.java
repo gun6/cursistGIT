@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 
 
 @Entity
+@NamedEntityGraph(name = "Wijnen.metSoortenEnLanden",attributeNodes = @NamedAttributeNode(value = "soorten",subgraph = "metLanden"),subgraphs = @NamedSubgraph(name = "metLanden",attributeNodes = @NamedAttributeNode("landen")))
 public class Wijnen implements Serializable {
 	private static final long serialVersionUID = 1L;
 

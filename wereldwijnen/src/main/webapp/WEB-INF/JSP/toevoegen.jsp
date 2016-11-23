@@ -4,25 +4,29 @@
 <!doctype html>
 <html lang='nl'>
 	<head>
-		<v:head title="under construction"/>
+		<v:head title="${wijn.soorten.naam} ${wijn.jaar} uit ${wijn.soorten.landen.naam}"/>
 	</head>
 	<body>
 		<h1>Wijn toevoegen aan mandje</h1>
-		<a>Terug naar overzicht</a>
+		<c:url value="/detail.htm" var="terugkeerURL">
+			<c:param name="id" value="${wijn.soorten.landen.id}"/>
+			<c:param name="soortid" value="${wijn.soorten.id}"/>						
+		</c:url>
+		<a href="${terugkeerURL}">Terug naar overzicht</a>
 		<dl>
 			<dt>Land</dt>
-			<dd></dd>
+			<dd>${wijn.soorten.landen.naam}</dd>
 			<dt>Soort</dt>
-			<dd></dd>
+			<dd>${wijn.soorten.naam}</dd>
 			<dt>Jaar</dt>
-			<dd></dd>
+			<dd>${wijn.jaar}</dd>
 			<dt>Beoordeling</dt>
-			<dd></dd>
+			<dd><c:forEach begin="1" end="${wijn.beoordeling}">&#9733;</c:forEach></dd>
 			<dt>Prijs</dt>
-			<dd></dd>
+			<dd>${wijn.prijs}</dd>
 		</dl>
 		<form method="post">
-			<label>Aantal flessen<span></span><input type="number" autofocus="autofocus" required="required" min="1" step="1"></label>
+			<label>Aantal flessen<span>${fout}</span><input name="aantalFlessen" type="number" autofocus="autofocus" required="required" min="1" step="1"></label>
 			<input type="submit" value="Toevoegen">
 		</form>
 	</body>

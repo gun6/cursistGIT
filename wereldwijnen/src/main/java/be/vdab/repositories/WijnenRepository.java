@@ -11,5 +11,11 @@ public class WijnenRepository extends AbstractRepository {
 		return getEntityManager().createNamedQuery("Wijnen.findAllOfSoort", Wijnen.class)
 				.setParameter("soort", soort).getResultList();
 	}
+	
+	public Wijnen getWijnMetSoortEnLand(int id) {
+		return getEntityManager().createNamedQuery("wijnen.findWithSoortAndLand",Wijnen.class)
+		.setParameter("id", id).setHint("javax.persistence.loadgraph", getEntityManager().createEntityGraph("Wijnen.metSoortenEnLanden"))
+		.getSingleResult();
+	}
 
 }

@@ -11,5 +11,9 @@ public class WijnenService {
 	public List<Wijnen> findAllOfSoort(int soort){
 		return wijnenRepository.findAllOfSoort(soort);
 	}
+	
+	public Wijnen getWijnMetSoortEnLand(int id){
+		return wijnenRepository.getWijnMetSoortEnLand(id);
+	}
 
 }

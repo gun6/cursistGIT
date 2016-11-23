@@ -156,13 +156,25 @@ a:hover {
 	text-decoration: underline;
 }
 
+dl {
+	width: 100%;
+	overflow: hidden;
+	padding: 2em;
+	margin: 2em;
+}
+
 dt {
 	float: left;
-	width: 15em;
+	width: 50%;
+	padding: 0;
+	margin: 0;
 }
 
 dd {
-	margin-left: 15em;
+	float: left;
+	width: 50%;
+	padding: 0;
+	margin: 0;
 	font-weight: bold;
 }
 
