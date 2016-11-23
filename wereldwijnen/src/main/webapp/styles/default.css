@@ -12,6 +12,15 @@ body {
 	color: white;
 }
 
+.spacing {
+	margin: 0.5em 0;
+	padding: 0.5em 0;
+}
+
+.mandje {
+	margin: 0.2em;
+	padding: 0.2em;
+}
 
 nav {
 	height: 1.8em;
