@@ -11,8 +11,6 @@ public class Bestelbonlijnen implements Serializable {
 
 	private int aantal;
 
-	private int bonid;
-
 	private BigDecimal prijs;
 
 	private int wijnid;
@@ -22,10 +20,9 @@ public class Bestelbonlijnen implements Serializable {
 	
 	
 
-	public Bestelbonlijnen(int aantal, int bonid, BigDecimal prijs, int wijnid) {
+	public Bestelbonlijnen(int aantal, BigDecimal prijs, int wijnid) {
 		super();
 		this.aantal = aantal;
-		this.bonid = bonid;
 		this.prijs = prijs;
 		this.wijnid = wijnid;
 	}
@@ -34,10 +31,6 @@ public class Bestelbonlijnen implements Serializable {
 
 	public int getAantal() {
 		return this.aantal;
-	}
-
-	public int getBonid() {
-		return this.bonid;
 	}
 
 	public BigDecimal getPrijs() {

@@ -33,10 +33,11 @@ public class Bestelbonnen implements Serializable {
 	private String straat;
 	
 	@ElementCollection
-	//@CollectionTable(name = "bestelbonlijnen",joinColumns = @JoinColumn(name = "bonid"))
+	@CollectionTable(name = "bestelbonlijnen",joinColumns = @JoinColumn(name = "bonid"))
 	@OrderBy("wijnid")
 	private Set<Bestelbonlijnen> bestelbonlijnen;
-
+	
+	@Version
 	private int versie;
 
 	public Bestelbonnen() {
@@ -136,12 +137,17 @@ public class Bestelbonnen implements Serializable {
 		return Collections.unmodifiableSet(bestelbonlijnen);
 	}
 	
+	
 	public void addBestelbonlijn(Bestelbonlijnen bestelbonlijn) {
 		bestelbonlijnen.add(bestelbonlijn);
 	}
 	
 	public void removeBestelbonlijn(Bestelbonlijnen bestelbonlijn) {
 		bestelbonlijnen.remove(bestelbonlijn);
+	}
+
+	public void setBestelbonlijnen(Set<Bestelbonlijnen> bestelbonlijnen) {
+		this.bestelbonlijnen = bestelbonlijnen;
 	}
 
 }

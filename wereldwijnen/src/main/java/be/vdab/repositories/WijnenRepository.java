@@ -13,9 +13,14 @@ public class WijnenRepository extends AbstractRepository {
 	}
 	
 	public Wijnen getWijnMetSoortEnLand(int id) {
-		return getEntityManager().createNamedQuery("wijnen.findWithSoortAndLand",Wijnen.class)
+		return getEntityManager().createNamedQuery("wijnen.findWijn",Wijnen.class)
 		.setParameter("id", id).setHint("javax.persistence.loadgraph", getEntityManager().createEntityGraph("Wijnen.metSoortenEnLanden"))
 		.getSingleResult();
+	}
+	
+	public Wijnen getWijn(int id) {
+		return getEntityManager().createNamedQuery("wijnen.findWijn",Wijnen.class)
+				.setParameter("id", id).getSingleResult();		
 	}
 
 }

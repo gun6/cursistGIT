@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,14 +16,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import be.vdab.entities.Bestelbonnen;
+import be.vdab.exceptions.RecordAangepastException;
 import be.vdab.services.BestelbonnenService;
 import be.vdab.valueobjects.Bestelbonlijnen;
+import be.vdab.valueobjects.MandOnderdeel;
 
 
 @WebServlet("/mandje.htm")
 public class MandjeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String VIEW = "/WEB-INF/JSP/mandje.jsp";
+	private static final String REDIRECT_URL = "%s/bevestiging.htm?bon=%d";
 	private static final String MANDJE = "mandje";
 	private static final String FOUT_BOODSCHAP_AFWEZIG = "Dit veld is verplicht";
 	private static final String FOUT_BOODSCHAP_VERKEERD = "Dit veld is niet correct ingevuld";
@@ -89,20 +93,31 @@ public class MandjeServlet extends HttpServlet {
 			bestelwijze = Integer.parseInt(request.getParameter("bestelwijze"));
 		}
 		
+		if (fouten.isEmpty()) {
+			Set<Bestelbonlijnen> bestelbonlijnen =  new LinkedHashSet<>();
+			Bestelbonnen bestelbon = new Bestelbonnen(new Date(), bestelwijze, gemeente, huisnummer, naam, postcode, straat,bestelbonlijnen, 1);
+			HttpSession session = request.getSession();
+			@SuppressWarnings("unchecked")
+			List<MandOnderdeel> mandje = (List<MandOnderdeel>)session.getAttribute(MANDJE);
+			for (MandOnderdeel mandOnderdeel : mandje) {
+				Bestelbonlijnen bestelbonlijn = new Bestelbonlijnen(mandOnderdeel.getAantal(), mandOnderdeel.getPrijs(), mandOnderdeel.getWijnId());
+				bestelbon.addBestelbonlijn(bestelbonlijn);
+			}
+			try {
+				bestelbonnenService.create(bestelbon);
+				session.invalidate();
+				response.sendRedirect(response.encodeRedirectURL(String.format(REDIRECT_URL, request.getContextPath(),bestelbon.getId())));
+			} catch (RecordAangepastException e) {
+				fouten.put("database", "Database was in gebruik, probeer opniew");
+			}
+			
+		}
+		
 		if (! fouten.isEmpty()) {
 			request.setAttribute("fouten", fouten);
 			HttpSession session = request.getSession();
 			request.setAttribute(MANDJE, session.getAttribute(MANDJE));
 			request.getRequestDispatcher(VIEW).forward(request, response);
-		}
-		
-		if (fouten.isEmpty()) {
-			Set<Bestelbonlijnen> bestelbonlijnen =  new LinkedHashSet<>();
-			Bestelbonnen bestelbon = new Bestelbonnen(new Date(), bestelwijze, gemeente, huisnummer, naam, postcode, straat,bestelbonlijnen, 1);
-			bestelbonnenService.create(bestelbon);
-			
-			request.setAttribute("bestelbonnr", bestelbon.getId());
-			
 		}
 	}
 

@@ -21,7 +21,8 @@ public class Wijnen implements Serializable {
 	private int jaar;
 
 	private BigDecimal prijs;
-
+	
+	@Version
 	private int versie;
 
 	//bi-directional many-to-one association to Soorten

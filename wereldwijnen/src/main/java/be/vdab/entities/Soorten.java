@@ -15,6 +15,7 @@ public class Soorten implements Serializable {
 
 	private String naam;
 
+	@Version
 	private int versie;
 
 	//bi-directional many-to-one association to Landen
