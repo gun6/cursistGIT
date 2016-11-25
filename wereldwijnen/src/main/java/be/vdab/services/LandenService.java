@@ -12,7 +12,7 @@ public class LandenService extends AbstractService {
 		return landenRepository.findAll();
 	}
 	
-	public Landen read(int id){
+	public Landen read(long id){
 		return landenRepository.read(id);
 	}
 }

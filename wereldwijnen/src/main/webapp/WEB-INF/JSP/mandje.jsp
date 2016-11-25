@@ -22,7 +22,7 @@
 					<th>Te betalen</th>
 				</tr>
 				<c:set var="total" value="${0}"/>
-				<c:forEach items="${mandje}" var="lijn">
+				<c:forEach items="${bestellijnen}" var="lijn">
 					<tr>
 						<td>${lijn.naam}</td>
 						<td>${lijn.prijs}</td>

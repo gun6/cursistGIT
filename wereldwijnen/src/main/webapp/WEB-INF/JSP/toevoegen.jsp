@@ -26,7 +26,7 @@
 			<dd>${wijn.prijs}</dd>
 		</dl>
 		<form method="post">
-			<label>Aantal flessen<span>${fout}</span><input name="aantalFlessen" type="number" autofocus="autofocus" required="required" min="1" step="1"></label>
+			<label>Aantal flessen<span>${fout}</span><input name="aantalFlessen" type="number" value="${aantal}" autofocus="autofocus" required="required" min="1" step="1"></label>
 			<input type="submit" value="Toevoegen">
 		</form>
 	</body>

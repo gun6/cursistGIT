@@ -10,7 +10,7 @@ public class LandenRepository extends AbstractRepository {
 		return getEntityManager().createNamedQuery("Landen.findAll", Landen.class).getResultList();
 	}
 	
-	public Landen read(int id) {
+	public Landen read(long id) {
 		return getEntityManager().find(Landen.class, id);
 	}
 

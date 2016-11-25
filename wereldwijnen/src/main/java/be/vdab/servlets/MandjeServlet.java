@@ -16,8 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import be.vdab.entities.Bestelbonnen;
+import be.vdab.entities.Wijnen;
 import be.vdab.exceptions.RecordAangepastException;
 import be.vdab.services.BestelbonnenService;
+import be.vdab.services.WijnenService;
 import be.vdab.valueobjects.Bestelbonlijnen;
 import be.vdab.valueobjects.MandOnderdeel;
 
@@ -31,30 +33,40 @@ public class MandjeServlet extends HttpServlet {
 	private static final String FOUT_BOODSCHAP_AFWEZIG = "Dit veld is verplicht";
 	private static final String FOUT_BOODSCHAP_VERKEERD = "Dit veld is niet correct ingevuld";
 	private final transient BestelbonnenService bestelbonnenService = new BestelbonnenService();
+	private final transient WijnenService wijnenService = new WijnenService();
 	
-
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		request.setAttribute(MANDJE, session.getAttribute(MANDJE));
+		Set<Bestelbonlijnen> mandjeLijnen = (Set<Bestelbonlijnen>) session.getAttribute(MANDJE);
+		Set<MandOnderdeel> bestelLijnen = new LinkedHashSet<>();
+		for (Bestelbonlijnen bestelbonlijn : mandjeLijnen) {
+			Wijnen wijn = wijnenService.getWijnMetSoortEnLand(bestelbonlijn.getWijnid());
+			MandOnderdeel onderdeel = new MandOnderdeel(wijn.getSoorten().getLanden().getNaam(), wijn.getSoorten().getNaam(), wijn.getJaar(), bestelbonlijn);
+			bestelLijnen.add(onderdeel);
+			// omzetten naar ander object om alle parameters te kunnen meegeven
+			//blijven werken met prijs bestelbonlijnen als de prijs verandert mag dit niet meeveranderen
+		}
+		request.setAttribute("bestellijnen", bestelLijnen);
 		request.getRequestDispatcher(VIEW).forward(request, response);
 	}
 
-
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String, String> fouten = new HashMap<>();
 		
 		String naam = request.getParameter("naam");
-		if (naam == null || naam.isEmpty()) {
+		if (naam == null || naam.trim().isEmpty()) {
 			fouten.put("naam", FOUT_BOODSCHAP_AFWEZIG);
 		}
 		
 		String straat = request.getParameter("straat");
-		if (straat == null || straat.isEmpty()) {
+		if (straat == null || straat.trim().isEmpty()) {
 			fouten.put("straat", FOUT_BOODSCHAP_AFWEZIG);
 		}
 		
 		String huisnummer = request.getParameter("huisnummer");
-		if (huisnummer == null || huisnummer.isEmpty()) {				//Integer.parseInt(null) geeft ook numberformatexception
+		if (huisnummer == null || huisnummer.trim().isEmpty()) {				//Integer.parseInt(null) geeft ook numberformatexception
 			fouten.put("huisnummer", FOUT_BOODSCHAP_AFWEZIG);
 		}
 		else {
@@ -71,7 +83,7 @@ public class MandjeServlet extends HttpServlet {
 		}
 		
 		String postcode = request.getParameter("postcode");
-		if (postcode == null || postcode.isEmpty()) {				
+		if (postcode == null || postcode.trim().isEmpty()) {				
 			fouten.put("postcode", FOUT_BOODSCHAP_AFWEZIG);
 		}
 		else {
@@ -81,7 +93,7 @@ public class MandjeServlet extends HttpServlet {
 		}
 		
 		String gemeente = request.getParameter("gemeente");
-		if (gemeente == null || gemeente.isEmpty()) {
+		if (gemeente == null || gemeente.trim().isEmpty()) {
 			fouten.put("gemeente", FOUT_BOODSCHAP_AFWEZIG);
 		}
 		
@@ -94,15 +106,16 @@ public class MandjeServlet extends HttpServlet {
 		}
 		
 		if (fouten.isEmpty()) {
-			Set<Bestelbonlijnen> bestelbonlijnen =  new LinkedHashSet<>();
-			Bestelbonnen bestelbon = new Bestelbonnen(new Date(), bestelwijze, gemeente, huisnummer, naam, postcode, straat,bestelbonlijnen, 1);
 			HttpSession session = request.getSession();
 			@SuppressWarnings("unchecked")
-			List<MandOnderdeel> mandje = (List<MandOnderdeel>)session.getAttribute(MANDJE);
-			for (MandOnderdeel mandOnderdeel : mandje) {
-				Bestelbonlijnen bestelbonlijn = new Bestelbonlijnen(mandOnderdeel.getAantal(), mandOnderdeel.getPrijs(), mandOnderdeel.getWijnId());
-				bestelbon.addBestelbonlijn(bestelbonlijn);
-			}
+			Set<Bestelbonlijnen> bestelbonlijnen =  (Set<Bestelbonlijnen>) session.getAttribute(MANDJE);
+			Bestelbonnen bestelbon = new Bestelbonnen(new Date(), bestelwijze, gemeente, huisnummer, naam, postcode, straat,bestelbonlijnen, 1);	
+			//@SuppressWarnings("unchecked")
+			//Set<MandOnderdeel> mandje = (Set<MandOnderdeel>)session.getAttribute(MANDJE);				*als direct met MandOnderdeel zou gewerkt worden
+			//for (MandOnderdeel mandOnderdeel : mandje) {													minder DB aanroepen maar ev wijzigingen in naam
+				//Bestelbonlijnen bestelbonlijn = mandOnderdeel.getBestelbonlijn();							worden niet bijgewerkt
+				//bestelbon.addBestelbonlijn(bestelbonlijn);
+			//}
 			try {
 				bestelbonnenService.create(bestelbon);
 				session.invalidate();

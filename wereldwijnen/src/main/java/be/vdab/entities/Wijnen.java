@@ -12,7 +12,7 @@ public class Wijnen implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 
 	private byte beoordeling;
 
@@ -33,11 +33,11 @@ public class Wijnen implements Serializable {
 	public Wijnen() {
 	}
 
-	public int getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -88,5 +88,38 @@ public class Wijnen implements Serializable {
 	public void setSoorten(Soorten soorten) {
 		this.soorten = soorten;
 	}
+
+	@Override
+	public String toString() {
+		return "Wijn [jaar=" + jaar + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Wijnen))
+			return false;
+		Wijnen other = (Wijnen) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	
+	
+	
+	
+	
 
 }

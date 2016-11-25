@@ -10,7 +10,7 @@ public class Landen implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	private long id;
 
 	private String naam;
 
@@ -24,11 +24,11 @@ public class Landen implements Serializable {
 	public Landen() {
 	}
 
-	public int getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -69,5 +69,36 @@ public class Landen implements Serializable {
 
 		return soorten;
 	}
+
+	@Override
+	public String toString() {
+		return "Land [naam=" + naam + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Landen))
+			return false;
+		Landen other = (Landen) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	
+	
+	
 
 }

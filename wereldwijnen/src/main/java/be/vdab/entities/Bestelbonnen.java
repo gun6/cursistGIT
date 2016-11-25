@@ -15,7 +15,7 @@ public class Bestelbonnen implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date besteld;
@@ -61,11 +61,11 @@ public class Bestelbonnen implements Serializable {
 
 
 
-	public int getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -149,5 +149,44 @@ public class Bestelbonnen implements Serializable {
 	public void setBestelbonlijnen(Set<Bestelbonlijnen> bestelbonlijnen) {
 		this.bestelbonlijnen = bestelbonlijnen;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "Bestelbon [id=" + id + "]";
+	}
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Bestelbonnen))
+			return false;
+		Bestelbonnen other = (Bestelbonnen) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+
+
+	
+	
+	
 
 }

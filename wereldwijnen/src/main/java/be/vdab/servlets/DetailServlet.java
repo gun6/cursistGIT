@@ -19,14 +19,15 @@ public class DetailServlet extends HttpServlet {
 	private final transient LandenService landenService = new LandenService();
 	private final transient SoortenService soortenService = new SoortenService();
 	private final transient WijnenService wijnenService = new WijnenService();
-
+	
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("landen", landenService.findAll());
-		request.setAttribute("land", landenService.read(Integer.parseInt(request.getParameter("id"))));
-		request.setAttribute("soorten", soortenService.findAllOfLand(Integer.parseInt(request.getParameter("id"))));
+		request.setAttribute("land", landenService.read(Long.parseLong(request.getParameter("id"))));
+		request.setAttribute("soorten", soortenService.findAllOfLand(Long.parseLong(request.getParameter("id"))));
 		if (request.getParameter("soortid")!=null) {
-			request.setAttribute("huidigeSoort", soortenService.read(Integer.parseInt(request.getParameter("soortid"))));
-			request.setAttribute("wijnen", wijnenService.findAllOfSoort(Integer.parseInt(request.getParameter("soortid"))));
+			request.setAttribute("huidigeSoort", soortenService.read(Long.parseLong(request.getParameter("soortid"))));
+			request.setAttribute("wijnen", wijnenService.findAllOfSoort(Long.parseLong(request.getParameter("soortid"))));
 		}
 		request.getRequestDispatcher(VIEW).forward(request, response);
 	}
