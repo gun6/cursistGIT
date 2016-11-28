@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+ <Context path='/cultuuhuisBis'>
+   <Resource name='jdbc/cultuurhuis'
+        type='javax.sql.DataSource'
+        username='cursist' password='cursist'
+        driverClassName='com.mysql.jdbc.Driver'
+        url='jdbc:mysql://localhost/cultuurhuis?useSSL=false'
+        closeMethod='close'/>
+ </Context> 
