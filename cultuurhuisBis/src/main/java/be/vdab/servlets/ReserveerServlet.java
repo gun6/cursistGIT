@@ -31,6 +31,16 @@ public class ReserveerServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			@SuppressWarnings("unchecked")
+			Map<Long, Integer> mandje = (Map<Long, Integer>) session.getAttribute("mandje");
+			if (mandje != null) {
+				if (mandje.containsKey(Long.parseLong(request.getParameter("id")))) {
+					request.setAttribute("vorigAantalPlaatsen", voorstellingendao.getPlaatsen(Long.parseLong(request.getParameter("id"))));
+				}
+			}
+		}
 		request.setAttribute("title", TITLE);
 		request.setAttribute("voorstelling", voorstellingendao.getVoorstelling(Long.parseLong(request.getParameter("id"))));
 		request.getRequestDispatcher(VIEW).forward(request, response);
@@ -47,7 +57,10 @@ public class ReserveerServlet extends HttpServlet {
 			fout = "Geef getal in";
 		}
 		if (aantalBeschikbaar < aantalGevraagd) {
-			fout = "Moet tussen 0 en "+ aantalBeschikbaar +" zijn";
+			fout = "Moet tussen 1 en "+ aantalBeschikbaar +" zijn";
+		}
+		if (aantalGevraagd < 1) {
+			fout = "Moet tussen 1 en "+ aantalBeschikbaar +" zijn";
 		}
 		if (fout == null) {
 			HttpSession session = request.getSession();
@@ -56,10 +69,15 @@ public class ReserveerServlet extends HttpServlet {
 			if (mandje == null) {
 				mandje = new LinkedHashMap<>();
 			}
-			
+			mandje.put(Long.parseLong(request.getParameter("id")), aantalGevraagd);
+			session.setAttribute("mandje", mandje);
+			response.sendRedirect(response.encodeRedirectURL(String.format(REDIRECT_URL, request.getContextPath())));
 		}
 		else {
-			
+			request.setAttribute("fout", fout);
+			request.setAttribute("title", TITLE);
+			request.setAttribute("voorstelling", voorstellingendao.getVoorstelling(Long.parseLong(request.getParameter("id"))));
+			request.getRequestDispatcher(VIEW).forward(request, response);
 		}
 	}
 	

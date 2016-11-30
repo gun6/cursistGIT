@@ -1,4 +1,4 @@
-<%@page contentType='text/html' pageEncoding='UTF-8' session='false'%>
+<%@page contentType='text/html' pageEncoding='UTF-8'%>
 <%@taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
 <%@taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
 <%@taglib prefix='vdab' uri='http://vdab.be/tags' %>
@@ -22,7 +22,7 @@
 			<dd>${voorstelling.vrijePlaatsen}</dd>
 		</dl>
 		<form method="post">
-			<label>Plaatsen<input name="aantalPlaatsen" value='${vorigAantalPlaatsen}' type="number" min='0' max'${voorstelling.vrijePlaatsen}' autofocus required></label>
+			<label>Plaatsen<input name="aantalPlaatsen" value='${vorigAantalPlaatsen}' type="number" min='1' step="1" max'${voorstelling.vrijePlaatsen}' autofocus required></label>
 			<input type="submit" value="Reserveren"> ${fout}
 		</form>		 
 	</body>
