@@ -88,4 +88,6 @@ public class KlantDAO extends AbstractDAO {
 		}
 	}
 	
+	
+	
 }

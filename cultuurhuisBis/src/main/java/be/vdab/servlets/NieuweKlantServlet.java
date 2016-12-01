@@ -25,7 +25,6 @@ public class NieuweKlantServlet extends HttpServlet {
 	private static final String VIEW = "/WEB-INF/JSP/nieuweklant.jsp";
 	private static final String TITLE = "nieuwe klant";
 	private static final String REDIRECT_URL = "%s/bevestiging.htm";
-	private static final transient VoorstellingenDAO voorstellingendao = new VoorstellingenDAO();
 	private static final transient KlantDAO klantdao = new KlantDAO();
 
 
