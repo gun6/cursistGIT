@@ -23,10 +23,12 @@ public class IndexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", TITLE);
 		request.setAttribute("genres", voorstellingendao.getGenres());
-		try {
-			request.setAttribute("lijstVoorstellingen", voorstellingendao.getHuidigeVoorstellingenVanGenre(Long.parseLong(request.getParameter("id"))));
-		} catch (Exception e) {
-			//TODO :) niet vergeten nu
+		if (request.getParameter("id") != null) {
+			try {
+				request.setAttribute("lijstVoorstellingen", voorstellingendao.getHuidigeVoorstellingenVanGenre(Long.parseLong(request.getParameter("id"))));
+			} catch (Exception e) {
+				request.setAttribute("fout", "Kon niet laden van databank");
+			}
 		}
 		request.getRequestDispatcher(VIEW).forward(request, response);
 	}

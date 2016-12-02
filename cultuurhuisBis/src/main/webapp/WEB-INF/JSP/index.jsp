@@ -10,6 +10,7 @@
     <body>
 		<v:header/>
 		<h2>Genres</h2>
+		<c:if test="${not empty fout}">${fout}</c:if>
 		<nav>
 			<ul>
 				<c:forEach var="entry" items="${genres}">
