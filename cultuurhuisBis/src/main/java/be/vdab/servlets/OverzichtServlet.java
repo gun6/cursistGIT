@@ -2,6 +2,7 @@ package be.vdab.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,19 +31,37 @@ public class OverzichtServlet extends HttpServlet {
 	private static final String VIEW = "/WEB-INF/JSP/overzicht.jsp";
 	private static final String TITLE = "overzicht";
 	private static final transient ReserveerDAO reserveerdao = new ReserveerDAO();
+	private static final transient VoorstellingenDAO voorstellingendao = new VoorstellingenDAO();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title",TITLE);
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			if (session.getAttribute("gelukteReserveringen") != null) {
-				
+			@SuppressWarnings("unchecked")
+			List<Long> gelukteReservaties = (List<Long>) session.getAttribute("gelukteReservaties");
+			@SuppressWarnings("unchecked")
+			Map<Long,Integer> mislukteReservaties = (Map<Long,Integer>) session.getAttribute("mislukteReservaties");
+			if (gelukteReservaties != null) {
+				List<Reservering> gelukteReserveringen = new ArrayList<>();
+				for (Long reservatie : gelukteReservaties) {
+					Reservering reservering = reserveerdao.getReserveringen(reservatie);
+					gelukteReserveringen.add(reservering);
+				}
+				request.setAttribute("gelukteReserveringen", gelukteReserveringen);
 			}
-			if (session.getAttribute("mislukteReserveringen") != null) {
-				
+			if (mislukteReservaties != null) {
+				List<Reservering> mislukteReserveringen = new ArrayList<>();
+				for (Entry<Long, Integer> reservatie : mislukteReservaties.entrySet()) {
+					if (reservatie.getKey() != null) {
+						Voorstelling voorstelling = voorstellingendao.getVoorstelling(reservatie.getKey());
+						Reservering reservering = new Reservering(voorstelling, reservatie.getValue());
+						mislukteReserveringen.add(reservering);
+					}
+				}
+				request.setAttribute("mislukteReserveringen", mislukteReserveringen);
 			}
 		}
-		
+		session.invalidate();
 		request.getRequestDispatcher(VIEW).forward(request, response);
 	}
 	
@@ -54,7 +73,7 @@ public class OverzichtServlet extends HttpServlet {
 			long klantId = reserveerdao.getKlantId((String)session.getAttribute("klant"));
 			if (mandje != null) {
 				List<Long> gelukteReservaties = new ArrayList<>();		
-				List<Long> mislukteReservaties = new ArrayList<>();
+				Map<Long,Integer> mislukteReservaties = new LinkedHashMap<>();
 				for (Entry<Long, Integer> entry : mandje.entrySet()) {
 					long voorstellingId = entry.getKey();
 					int aantalPlaatsen = entry.getValue();
@@ -64,11 +83,11 @@ public class OverzichtServlet extends HttpServlet {
 						gelukteReservaties.add(reservatieId);
 					}
 					else {
-						mislukteReservaties.add(reservatieId);
+						mislukteReservaties.put(voorstellingId, aantalPlaatsen);
 					}
 				}
-				session.setAttribute("gelukteReserveringen", gelukteReservaties);
-				session.setAttribute("mislukteReserveringen", mislukteReservaties);
+				session.setAttribute("gelukteReservaties", gelukteReservaties);
+				session.setAttribute("mislukteReservaties", mislukteReservaties);
 			}
 			
 			session.removeAttribute("mandje");
@@ -80,5 +99,7 @@ public class OverzichtServlet extends HttpServlet {
 	@Resource(name = ReserveerDAO.JNDI_NAME)
 	void setDataSource(DataSource dataSource){
 		reserveerdao.setDataSource(dataSource);
+		voorstellingendao.setDataSource(dataSource);
 	}
+
 }
