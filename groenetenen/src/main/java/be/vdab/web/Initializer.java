@@ -1,9 +1,8 @@
 package be.vdab.web;
 
-import java.nio.file.DirectoryStream.Filter;
-
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
 
 public class Initializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -24,6 +23,6 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 	
 	@Override
 	 protected javax.servlet.Filter[] getServletFilters() { 
-		   return (javax.servlet.Filter[]) new Filter[] { (Filter) new CharacterEncodingFilter("UTF-8") }; 
+		   return new javax.servlet.Filter[] {new CharacterEncodingFilter("UTF-8")};
 	}
 }
