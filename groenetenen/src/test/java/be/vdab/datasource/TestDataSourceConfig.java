@@ -10,6 +10,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public class TestDataSourceConfig {
 	@Bean
 	DataSource dataSource() {
-		return new DriverManagerDataSource("jdbc:mysql://localhost/groenetenen?useSSL=false", "cursist", "cursist");
+		return new DriverManagerDataSource("jdbc:mysql://localhost/groenetenen?useSSL=false&nullNamePatternMatchesAll=true", "cursist", "cursist");
 	}
 }

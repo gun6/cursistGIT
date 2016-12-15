@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -35,6 +36,7 @@ public class FiliaalController {
 	private static final String PER_POSTCODE_VIEW = "filialen/perpostcode";
 	private static final String WIJZIGEN_VIEW = "filialen/wijzigen";
 	private static final String REDIRECT_URL_NA_WIJZIGEN = "redirect:/filialen";
+	private static final String REDIRECT_URL_NA_LOCKING_EXCEPTION = "redirect:/filialen/{id}?optimisticlockingexception=true";
 	private final FiliaalService filiaalService;
 	
 	FiliaalController(FiliaalService filiaalService) {
@@ -46,10 +48,12 @@ public class FiliaalController {
 		return new ModelAndView(FILIALEN_VIEW,"filialen",filiaalService.findAll()).addObject("aantalFilialen", filiaalService.findAantalFilialen());
 	}
 	
-	@GetMapping("{id}")
-	ModelAndView read(@PathVariable long id) {
+	@GetMapping("{filiaal}")
+	ModelAndView read(@PathVariable Filiaal filiaal) {
 		ModelAndView modelAndView = new ModelAndView(FILIAAL_VIEW);
-		filiaalService.read(id).ifPresent(filiaal -> modelAndView.addObject(filiaal));
+		if (filiaal != null) {
+			modelAndView.addObject(filiaal);
+		}
 		return modelAndView;
 	}
 	
@@ -67,15 +71,12 @@ public class FiliaalController {
 			return REDIRECT_URL_NA_TOEVOEGEN;
 	}
 	
-	@PostMapping("{id}/verwijderen")
-	String delete(@PathVariable long id, RedirectAttributes redirectAttributes) {
-		Optional<Filiaal> optionalFiliaal = filiaalService.read(id);
-		if (! optionalFiliaal.isPresent()) {
-			return REDIRECT_URL_FILIAAL_NIET_GEVONDEN;
-		}
+	@PostMapping("{filiaal}/verwijderen")
+	String delete(@PathVariable Filiaal filiaal, RedirectAttributes redirectAttributes) {
+		long id = filiaal.getId();
 		try {
 			filiaalService.delete(id);
-			redirectAttributes.addAttribute("id", id).addAttribute("naam", optionalFiliaal.get().getNaam());
+			redirectAttributes.addAttribute("id", id).addAttribute("naam",filiaal.getNaam());
 			return REDIRECT_URL_NA_VERWIJDEREN;
 		}
 		catch (FiliaalHeeftNogWerknemersException ex) {
@@ -89,7 +90,7 @@ public class FiliaalController {
 	binder.initDirectFieldAccess(); 
 	}
 	
-	@GetMapping("{id}/verwijderd")
+	@GetMapping("{filiaal}/verwijderd")
 	String deleted(String naam) {
 		return VERWIJDERD_VIEW;
 	}
@@ -122,13 +123,9 @@ public class FiliaalController {
 	binder.initDirectFieldAccess(); 
 	}
 	
-	@GetMapping("{id}/wijzigen")
-	ModelAndView updateForm(@PathVariable long id) {
-		Optional<Filiaal> optionalFiliaal = filiaalService.read(id);
-		if (! optionalFiliaal.isPresent()) {
-			return new ModelAndView(REDIRECT_URL_FILIAAL_NIET_GEVONDEN);
-		}
-		return new ModelAndView(WIJZIGEN_VIEW).addObject(optionalFiliaal.get());
+	@GetMapping("{filiaal}/wijzigen")
+	ModelAndView updateForm(@PathVariable Filiaal filiaal) {
+		return new ModelAndView(WIJZIGEN_VIEW).addObject(filiaal);
 	}
 	
 	@PostMapping("{id}/wijzigen")
@@ -136,8 +133,12 @@ public class FiliaalController {
 		if (bindingResult.hasErrors()) {
 			return WIJZIGEN_VIEW;
 		}
-		filiaalService.update(filiaal);
-		return REDIRECT_URL_NA_WIJZIGEN;
+		try {
+			filiaalService.update(filiaal);
+			return REDIRECT_URL_NA_WIJZIGEN;
+		} catch (ObjectOptimisticLockingFailureException e) {
+			return REDIRECT_URL_NA_LOCKING_EXCEPTION;
+		}
 	}
 
 }
