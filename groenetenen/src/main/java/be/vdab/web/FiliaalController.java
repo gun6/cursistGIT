@@ -1,10 +1,10 @@
 package be.vdab.web;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.http.MediaType;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,7 +23,7 @@ import be.vdab.services.FiliaalService;
 import be.vdab.valueobjects.PostcodeReeks;
 
 @Controller
-@RequestMapping("/filialen")
+@RequestMapping(path = "/filialen", produces = MediaType.TEXT_HTML_VALUE)
 public class FiliaalController {
 	private static final String FILIALEN_VIEW = "filialen/filialen";
 	private static final String TOEVOEGEN_VIEW = "filialen/toevoegen";
@@ -37,6 +37,8 @@ public class FiliaalController {
 	private static final String WIJZIGEN_VIEW = "filialen/wijzigen";
 	private static final String REDIRECT_URL_NA_WIJZIGEN = "redirect:/filialen";
 	private static final String REDIRECT_URL_NA_LOCKING_EXCEPTION = "redirect:/filialen/{id}?optimisticlockingexception=true";
+	private static final String AFSCHRIJVEN_VIEW = "filialen/afschrijven";
+	private static final String REDIRECT_NA_AFSCHRIJVEN = "redirect:/";
 	private final FiliaalService filiaalService;
 	
 	FiliaalController(FiliaalService filiaalService) {
@@ -140,5 +142,18 @@ public class FiliaalController {
 			return REDIRECT_URL_NA_LOCKING_EXCEPTION;
 		}
 	}
-
+	
+	@GetMapping("afschrijven")
+	ModelAndView afschrijvenForm() {
+		return new ModelAndView(AFSCHRIJVEN_VIEW, "filialen",filiaalService.findNietAfgeschreven()).addObject(new AfschrijvenForm());
+	}
+	
+	@PostMapping("afschrijven")
+	ModelAndView afschrijven(@Valid AfschrijvenForm afschrijvenForm,BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) { 
+				return new ModelAndView(AFSCHRIJVEN_VIEW, "filialen",filiaalService.findNietAfgeschreven());
+		}
+		filiaalService.afschrijven(afschrijvenForm.getFilialen());
+		return new ModelAndView(REDIRECT_NA_AFSCHRIJVEN);
+	}
 }
