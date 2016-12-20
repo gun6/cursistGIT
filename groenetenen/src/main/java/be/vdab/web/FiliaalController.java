@@ -2,6 +2,7 @@ package be.vdab.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
@@ -39,6 +40,7 @@ public class FiliaalController {
 	private static final String REDIRECT_URL_NA_LOCKING_EXCEPTION = "redirect:/filialen/{id}?optimisticlockingexception=true";
 	private static final String AFSCHRIJVEN_VIEW = "filialen/afschrijven";
 	private static final String REDIRECT_NA_AFSCHRIJVEN = "redirect:/";
+	private static final String PER_ID_VIEW = "filialen/perid";
 	private final FiliaalService filiaalService;
 	
 	FiliaalController(FiliaalService filiaalService) {
@@ -65,11 +67,11 @@ public class FiliaalController {
 	}
 	
 	@PostMapping
-	String create(@Valid Filiaal filiaal, BindingResult bindingResult) {
+	String create(@Valid Filiaal filiaal, BindingResult bindingResult,HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
 			return TOEVOEGEN_VIEW;
 			}
-			filiaalService.create(filiaal);
+			filiaalService.create(filiaal, request.getRequestURL().toString());
 			return REDIRECT_URL_NA_TOEVOEGEN;
 	}
 	
@@ -155,5 +157,10 @@ public class FiliaalController {
 		}
 		filiaalService.afschrijven(afschrijvenForm.getFilialen());
 		return new ModelAndView(REDIRECT_NA_AFSCHRIJVEN);
+	}
+	
+	@GetMapping("perid")
+	String findById() {
+		return PER_ID_VIEW;
 	}
 }
