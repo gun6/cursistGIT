@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import be.vdab.entities.Filiaal;
 import be.vdab.exceptions.FiliaalHeeftNogWerknemersException;
@@ -64,6 +66,7 @@ class DefaultFiliaalService implements FiliaalService {
 	}
 	
 	@Override
+	@PreAuthorize("hasAuthority('manager')")
 	public List<Filiaal> findByPostcodeReeks(PostcodeReeks reeks) {
 	return filiaalRepository.findByAdresPostcodeBetweenOrderByNaam(reeks.getVanpostcode(),reeks.getTotpostcode());
 	}
@@ -77,5 +80,12 @@ class DefaultFiliaalService implements FiliaalService {
 	@ModifyingTransactionalServiceMethod
 	public void afschrijven(List<Filiaal> filialen) {
 		filialen.stream().forEach(filiaal -> filiaal.afschrijven());
+	}
+
+	@Override
+	@Scheduled(cron = "0 0 1 * * *" /*fixedRate=60000*/)
+	public void aantalFilialenMail() {
+		mailSender.aantalFilialenMail(filiaalRepository.count());
+		
 	}
 }
