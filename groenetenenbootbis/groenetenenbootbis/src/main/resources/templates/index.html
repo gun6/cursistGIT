@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Werknemers</title>
+		<link rel='stylesheet' th:href='@{/styles/default.css}'/>
+	</head>
+	<body>
+		<form th:action='@{/}' th:object='${voornaamForm}'>
+			<label>Voornaam:<input th:field='*{voornaam}'/><span th:if="${#fields.hasErrors('voornaam')}" th:errors='*{voornaam}'></span></label>
+			<input type='submit' value='zoeken'/>
+		</form>
+		<ul th:if='${werknemers != null}'>
+			<li th:each='werknemer : ${werknemers}' th:text='${werknemer.familienaam}'></li>
+		</ul>
+	</body>
+</html>

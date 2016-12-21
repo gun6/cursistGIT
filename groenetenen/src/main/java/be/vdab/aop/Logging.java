@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 class Logging {
 	private final static Logger LOGGER = Logger.getLogger(Logging.class.getName());
 	
-	@AfterThrowing(pointcut = "execution(* be.vdab.services.*.*(..)) || execution(* org.springframework.transaction.*.*(..))", throwing = "ex")
+	@AfterThrowing(pointcut = "be.vdab.aop.PointcutExpressions.servicesEnTransacties()", throwing = "ex")
 	void schrijfException(JoinPoint joinPoint, Throwable ex) {
 		StringBuilder builder = new StringBuilder("\nTijdstip\t").append(LocalDateTime.now());
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

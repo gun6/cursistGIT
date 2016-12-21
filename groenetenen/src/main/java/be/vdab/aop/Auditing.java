@@ -8,16 +8,18 @@ import java.util.logging.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@Order(2)
 class Auditing {
 	private final static Logger LOGGER = Logger.getLogger(Auditing.class.getName());
 	
-	@AfterReturning(pointcut = "execution(* be.vdab.services.*.*(..))",returning = "returnValue")
+	@AfterReturning(pointcut = "be.vdab.aop.PointcutExpressions.services()",returning = "returnValue")
 	void schrijfAudit(JoinPoint joinPoint, Object returnValue) {
 		StringBuilder builder = new StringBuilder("\nTijdstip\t").append(LocalDateTime.now());
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
