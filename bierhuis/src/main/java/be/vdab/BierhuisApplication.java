@@ -1,0 +1,12 @@
+package be.vdab;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class BierhuisApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BierhuisApplication.class, args);
+	}
+}
