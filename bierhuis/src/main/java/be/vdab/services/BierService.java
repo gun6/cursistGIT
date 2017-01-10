@@ -8,4 +8,5 @@ import be.vdab.entities.Brouwer;
 public interface BierService {
 	List<Bier> findByBrouwerOrderByName(Brouwer brouwer);
 	long findAantalBieren();
+	Bier findByNaam(String naam);
 }

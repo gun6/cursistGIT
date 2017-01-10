@@ -2,6 +2,7 @@ package be.vdab.valueobjects;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable

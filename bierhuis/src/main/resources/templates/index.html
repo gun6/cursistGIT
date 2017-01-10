@@ -4,6 +4,7 @@
 		<title>Bierhuis</title>
 	</head>
 	<body>
+		<div th:include="fragments/menu :: menu"></div>
 		<h1>Welkom in het huis van de Belgische bieren</h1>
 		<img alt="bieren" th:src="@{/images/bierhuis.jpg}"/>
 		<p>we hebben momenteel <a th:text="${aantalBieren}"></a> bieren</p>

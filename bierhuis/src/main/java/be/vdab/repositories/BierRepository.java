@@ -9,4 +9,5 @@ import be.vdab.entities.Brouwer;
 
 public interface BierRepository extends JpaRepository<Bier, Long> {
 	List<Bier> findByBrouwerOrderByNaam(Brouwer brouwer);
+	Bier findByNaam(String naam);
 }

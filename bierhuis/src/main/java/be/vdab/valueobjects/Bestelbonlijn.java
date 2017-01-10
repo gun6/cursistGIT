@@ -40,6 +40,18 @@ public class Bestelbonlijn implements Serializable {
 		return bier;
 	}
 	
+	public void setAantal(long aantal) {
+		this.aantal = aantal;
+	}
+
+	public void setPrijs(BigDecimal prijs) {
+		this.prijs = prijs;
+	}
+
+	public void setBier(Bier bier) {
+		this.bier = bier;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -6,4 +6,5 @@ import be.vdab.entities.Brouwer;
 
 public interface BrouwerService {
 	List<Brouwer> findAll();
+	Brouwer findByNaam(String naam);
 }

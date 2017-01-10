@@ -26,4 +26,9 @@ class DefaultBierService implements BierService {
 		return bierRepository.count();
 	}
 
+	@Override
+	public Bier findByNaam(String naam) {
+		return bierRepository.findByNaam(naam);
+	}
+
 }

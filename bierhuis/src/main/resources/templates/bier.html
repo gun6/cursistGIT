@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title th:text="${bier.naam}"></title>
+	</head>
+	<body>
+		<div th:include="fragments/menu :: menu"></div>
+		<h1 th:text="${bier.naam}"></h1>
+		<dl>
+			<dt>Alcohol</dt>
+			<dd th:text="${bier.alcohol}"></dd>
+			<dt>Prijs</dt>
+			<dd th:text="${bier.prijs}"></dd>
+			<dt>Soort</dt>
+			<dd th:text="${bier.soort.naam}"></dd>
+			<dt>Brouwer</dt>
+			<dd th:text="${bier.brouwer.naam}"></dd>
+		</dl>
+		<form th:action="@{/winkelwagen}" th:object="${bestelForm}" method="post">
+			<input type="number" th:field="*{aantal}" />
+			<input type="hidden" name="bierId" id="bierId" th:value="${bier.id}" />
+			<input type="submit" value="Toevoegen" />
+		</form>
+	</body>
+</html>

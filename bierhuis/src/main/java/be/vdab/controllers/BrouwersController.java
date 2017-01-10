@@ -1,0 +1,47 @@
+package be.vdab.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import be.vdab.entities.Brouwer;
+import be.vdab.services.BierService;
+import be.vdab.services.BrouwerService;
+import be.vdab.valueobjects.BestelForm;
+
+@Controller
+@RequestMapping("/brouwers")
+class BrouwersController {
+	private final static String BROUWERS_VIEW = "brouwers";
+	private final static String BIEREN_VIEW = "bieren";
+	private final static String BIER_VIEW = "bier";
+	private final BrouwerService brouwerService;
+	private final BierService bierService;
+	
+	public BrouwersController(BrouwerService brouwerService,BierService bierService) {
+		this.brouwerService = brouwerService;
+		this.bierService = bierService;
+	}
+	
+	@GetMapping
+	ModelAndView brouwers(){
+		return new ModelAndView(BROUWERS_VIEW,"brouwers",brouwerService.findAll());
+	}
+	
+	@GetMapping("bieren/{biernaam}")
+	ModelAndView bier(@PathVariable String biernaam){
+		BestelForm bestelForm = new BestelForm();
+		bestelForm.setAantal(1);
+		return new ModelAndView(BIER_VIEW,"bier",bierService.findByNaam(biernaam)).addObject(bestelForm);
+	}
+	
+	@GetMapping("{brouwernaam}")
+	ModelAndView bieren(@PathVariable String brouwernaam){
+		Brouwer brouwer = brouwerService.findByNaam(brouwernaam);
+		return new ModelAndView(BIEREN_VIEW,"brouwer",brouwer).addObject("bieren",bierService.findByBrouwerOrderByName(brouwer));
+	}
+	
+	
+}
