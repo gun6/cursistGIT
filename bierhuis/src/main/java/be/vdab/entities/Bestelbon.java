@@ -2,6 +2,7 @@ package be.vdab.entities;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -30,13 +31,13 @@ public class Bestelbon implements Serializable{
 	private Adres adres;
 	@ElementCollection
 	@CollectionTable(name = "bestelbonlijnen",joinColumns = @JoinColumn(name = "bestelbonid"))
-	private Set<Bestelbonlijn> bestelbonlijnen;
+	private List<Bestelbonlijn> bestelbonlijnen;
 	
 	public Bestelbon() {
 	}
 	
 	public Bestelbon(String naam, String straat, String huisNr, int postcode, String gemeente,
-			Set<Bestelbonlijn> bestelbonlijnen) {
+			List<Bestelbonlijn> bestelbonlijnen) {
 		this.naam = naam;
 		this.adres = new Adres(straat, huisNr, postcode, gemeente);
 		this.bestelbonlijnen = bestelbonlijnen;
@@ -54,8 +55,8 @@ public class Bestelbon implements Serializable{
 		return adres;
 	}
 
-	public Set<Bestelbonlijn> getBestelbonlijnen() {
-		return Collections.unmodifiableSet(bestelbonlijnen);
+	public List<Bestelbonlijn> getBestelbonlijnen() {
+		return Collections.unmodifiableList(bestelbonlijnen);
 	}
 	
 	public void add(Bestelbonlijn bestelbonlijn) {

@@ -1,5 +1,7 @@
 package be.vdab.services;
 
-public interface BestelbonService {
+import be.vdab.entities.Bestelbon;
 
+public interface BestelbonService {
+	void create(Bestelbon bestelbon);
 }
