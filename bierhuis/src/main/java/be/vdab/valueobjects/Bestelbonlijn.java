@@ -13,7 +13,7 @@ import be.vdab.entities.Bier;
 public class Bestelbonlijn implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private long aantal;
+	private int aantal;
 	private BigDecimal prijs;
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "bierid")
@@ -22,13 +22,13 @@ public class Bestelbonlijn implements Serializable {
 	public Bestelbonlijn() {
 	}
 	
-	public Bestelbonlijn(long aantal, BigDecimal prijs, Bier bier) {
+	public Bestelbonlijn(int aantal, BigDecimal prijs, Bier bier) {
 		this.aantal = aantal;
 		this.prijs = prijs;
 		this.bier = bier;
 	}
 
-	public long getAantal() {
+	public int getAantal() {
 		return aantal;
 	}
 	
@@ -38,18 +38,6 @@ public class Bestelbonlijn implements Serializable {
 	
 	public Bier getBier() {
 		return bier;
-	}
-	
-	public void setAantal(long aantal) {
-		this.aantal = aantal;
-	}
-
-	public void setPrijs(BigDecimal prijs) {
-		this.prijs = prijs;
-	}
-
-	public void setBier(Bier bier) {
-		this.bier = bier;
 	}
 
 	@Override

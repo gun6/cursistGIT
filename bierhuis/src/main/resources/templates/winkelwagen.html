@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>Insert title here</title>
+		<title>Winkelwagen</title>
 	</head>
 	<body>
 		<div th:include="fragments/menu :: menu"></div>
-		<h1 th:text="${bestelForm.aantal}"></h1>
+		<h1>Winkelwagen</h1>
+		<ul>
+			<li th:each="lijn : ${lijnen}" th:text="${lijn}"></li>
+		</ul>
+		<form th:action="@{/winkelwagen/bevestiging}" th:object="${klantForm}" method="post">
+			<label>Naam<input type="text" th:field="*{naam}" /></label>
+			<label>Straat<input type="text" th:field="*{adres.straat}" /></label>
+			<label>Huisnummer<input type="text" th:field="*{adres.huisNr}" /></label>
+			<label>Postcode<input type="number" th:field="*{adres.postcode}" /></label>
+			<label>Gemeente<input type="text" th:field="*{adres.gemeente}" /></label>
+			<input type="submit" value="Als bestelbon bevestigen" />
+		</form>
 	</body>
 </html>

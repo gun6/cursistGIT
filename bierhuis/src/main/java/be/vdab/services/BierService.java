@@ -9,4 +9,5 @@ public interface BierService {
 	List<Bier> findByBrouwerOrderByName(Brouwer brouwer);
 	long findAantalBieren();
 	Bier findByNaam(String naam);
+	Bier read(long id);
 }

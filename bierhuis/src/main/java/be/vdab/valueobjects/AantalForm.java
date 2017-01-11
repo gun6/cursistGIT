@@ -1,6 +1,6 @@
 package be.vdab.valueobjects;
 
-public class BestelForm {
+public class AantalForm {
 	private int aantal;
 	private long bierId;
 	

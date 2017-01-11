@@ -31,4 +31,9 @@ class DefaultBierService implements BierService {
 		return bierRepository.findByNaam(naam);
 	}
 
+	@Override
+	public Bier read(long id) {
+		return bierRepository.findOne(id);
+	}
+
 }

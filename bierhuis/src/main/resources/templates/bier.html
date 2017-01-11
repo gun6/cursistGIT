@@ -16,9 +16,10 @@
 			<dt>Brouwer</dt>
 			<dd th:text="${bier.brouwer.naam}"></dd>
 		</dl>
-		<form th:action="@{/winkelwagen}" th:object="${bestelForm}" method="post">
-			<input type="number" th:field="*{aantal}" />
-			<input type="hidden" name="bierId" id="bierId" th:value="${bier.id}" />
+		<form th:action="@{/winkelwagen}" th:object="${aantalForm}" method="post">
+			<label>Aantal
+			<input type="number" th:field="*{aantal}" /></label>
+			<input type="hidden" name="bierId" th:value="${bier.id}" />
 			<input type="submit" value="Toevoegen" />
 		</form>
 	</body>

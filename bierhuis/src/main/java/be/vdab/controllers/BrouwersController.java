@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import be.vdab.entities.Bier;
 import be.vdab.entities.Brouwer;
 import be.vdab.services.BierService;
 import be.vdab.services.BrouwerService;
-import be.vdab.valueobjects.BestelForm;
+import be.vdab.valueobjects.AantalForm;
+import be.vdab.valueobjects.Bestelbonlijn;
 
 @Controller
 @RequestMapping("/brouwers")
@@ -32,9 +34,10 @@ class BrouwersController {
 	
 	@GetMapping("bieren/{biernaam}")
 	ModelAndView bier(@PathVariable String biernaam){
-		BestelForm bestelForm = new BestelForm();
-		bestelForm.setAantal(1);
-		return new ModelAndView(BIER_VIEW,"bier",bierService.findByNaam(biernaam)).addObject(bestelForm);
+		Bier bier = bierService.findByNaam(biernaam);
+		AantalForm aantalForm = new AantalForm();
+		aantalForm.setAantal(1);
+		return new ModelAndView(BIER_VIEW,"bier",bier).addObject(aantalForm);
 	}
 	
 	@GetMapping("{brouwernaam}")
