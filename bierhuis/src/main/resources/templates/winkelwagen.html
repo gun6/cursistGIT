@@ -11,10 +11,10 @@
 		</ul>
 		<form th:action="@{/winkelwagen/bevestiging}" th:object="${klantForm}" method="post">
 			<label>Naam<input type="text" th:field="*{naam}" /></label>
-			<label>Straat<input type="text" th:field="*{adres.straat}" /></label>
-			<label>Huisnummer<input type="text" th:field="*{adres.huisNr}" /></label>
-			<label>Postcode<input type="number" th:field="*{adres.postcode}" /></label>
-			<label>Gemeente<input type="text" th:field="*{adres.gemeente}" /></label>
+			<label>Straat<input type="text" th:field="*{straat}" /></label>
+			<label>Huisnummer<input type="text" th:field="*{huisNr}" /></label>
+			<label>Postcode<input type="number" th:field="*{postcode}" /></label>
+			<label>Gemeente<input type="text" th:field="*{gemeente}" /></label>
 			<input type="submit" value="Als bestelbon bevestigen" />
 		</form>
 	</body>

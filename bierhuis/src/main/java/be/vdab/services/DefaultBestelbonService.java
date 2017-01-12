@@ -14,8 +14,8 @@ class DefaultBestelbonService implements BestelbonService {
 	}
 	
 	@Override
-	public void create(Bestelbon bestelbon) {
-		bestelbonRepository.save(bestelbon);
+	public Bestelbon create(Bestelbon bestelbon) {
+		return bestelbonRepository.save(bestelbon);
 	}
 
 }

@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import be.vdab.entities.Bestelbon;
 import be.vdab.entities.Bier;
@@ -26,7 +28,7 @@ class WinkelwagenController {
 	private final static String VIEW = "redirect:winkelwagen";
 	private final static String GET_VIEW = "winkelwagen";
 	private final static String BEVESTIG_VIEW = "bevestigen";
-	private final static String BEVESTIG_REDIRECT = "redirect:/winkelwagen/bevestiging";
+	private final static String BEVESTIG_REDIRECT = "redirect:/winkelwagen/bevestiging/{id}";
 	private final static String TEST_VIEW = "test";
 	private final BierService bierService;
 	private final BestelbonService bestelbonService;
@@ -38,18 +40,18 @@ class WinkelwagenController {
 	}
 	
 	@PostMapping("bevestiging")
-	ModelAndView sendToConfirm(KlantForm klantForm){
-		Bestelbon bestelbon = new Bestelbon(klantForm.getNaam(), klantForm.getAdres().getStraat(), klantForm.getAdres().getHuisNr(), klantForm.getAdres().getPostcode(), klantForm.getAdres().getGemeente(), mandje.getMandje());
-		if (bestelbon.getNaam()!=null) {
-			return new ModelAndView(TEST_VIEW,"var",bestelbon);
-		}
-//		bestelbonService.create(bestelbon);
+	ModelAndView sendToConfirm(KlantForm klantForm,RedirectAttributes redirectAttributes){
+		Bestelbon bestelbon = new Bestelbon(klantForm.getNaam(), klantForm.getStraat(), klantForm.getHuisNr(), klantForm.getPostcode(), klantForm.getGemeente(), mandje.getMandje());
+		bestelbon = bestelbonService.create(bestelbon);
+		long id = bestelbon.getId();
+		redirectAttributes.addAttribute("id", id);
+		mandje.clear();
 		return new ModelAndView(BEVESTIG_REDIRECT);
 	}
 	
-	@GetMapping("bevestiging")
-	ModelAndView confirm(){
-		return new ModelAndView(BEVESTIG_VIEW);
+	@GetMapping("bevestiging/{id}")
+	ModelAndView confirm(@PathVariable long id){
+		return new ModelAndView(BEVESTIG_VIEW,"id",id);
 	}
 
 	@PostMapping(params = {"aantal","bierId"})
