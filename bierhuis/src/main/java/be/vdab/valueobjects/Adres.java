@@ -86,8 +86,8 @@ public class Adres implements Serializable {
 
 	}
 	
-	public static Adres reverseToString(String string) {
-		String[] parts = string.split(" ");
-		return new Adres(parts[0], parts[1], Integer.parseInt(parts[2]), parts[3]);
-	}
+//	public static Adres reverseToString(String string) {
+//		String[] parts = string.split(" ");
+//		return new Adres(parts[0], parts[1], Integer.parseInt(parts[2]), parts[3]);
+//	}
 }

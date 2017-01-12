@@ -2,13 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<title>Winkelwagen</title>
+		<th:block th:include="fragments/links :: links"></th:block>
 	</head>
 	<body>
 		<div th:include="fragments/menu :: menu"></div>
 		<h1>Winkelwagen</h1>
-		<ul>
-			<li th:each="lijn : ${lijnen}" th:text="${lijn}"></li>
-		</ul>
+		<table>
+			<tr>
+				<th>Bier</th>
+				<th>Prijs</th>
+				<th>Aantal</th>
+				<th>Te betalen</th>
+			</tr>
+			<tr th:each="lijn : ${lijnen}">
+				<td th:text="${lijn.bier.naam}"></td>
+				<td th:text="${lijn.prijs}"></td>
+				<td th:text="${lijn.aantal}"></td>
+				<td class="part" th:text="${lijn.aantal}*${lijn.prijs}"></td>
+			</tr>
+			<tr>
+				<td colspan="2"></td>
+				<td>totaal:</td>
+				<td class="total"></td>
+			</tr>
+		</table>
 		<form th:action="@{/winkelwagen/bevestiging}" th:object="${klantForm}" method="post">
 			<label>Naam<input type="text" th:field="*{naam}" /></label>
 			<label>Straat<input type="text" th:field="*{straat}" /></label>

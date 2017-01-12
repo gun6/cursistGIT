@@ -29,7 +29,6 @@ class WinkelwagenController {
 	private final static String GET_VIEW = "winkelwagen";
 	private final static String BEVESTIG_VIEW = "bevestigen";
 	private final static String BEVESTIG_REDIRECT = "redirect:/winkelwagen/bevestiging/{id}";
-	private final static String TEST_VIEW = "test";
 	private final BierService bierService;
 	private final BestelbonService bestelbonService;
 	
