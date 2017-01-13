@@ -34,4 +34,17 @@ class MandjeImpl implements Serializable, Mandje {
 		lijnen.clear();
 	}
 
+	@Override
+	public void removeLijn(Bestelbonlijn bestelbonlijn) {
+		lijnen.remove(bestelbonlijn);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		if (lijnen == null) {
+			return true;
+		}
+		return false;
+	}
+
 }
