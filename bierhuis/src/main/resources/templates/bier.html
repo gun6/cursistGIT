@@ -19,7 +19,8 @@
 		</dl>
 		<form th:action="@{/winkelwagen}" th:object="${aantalForm}" method="post">
 			<label>Aantal
-			<input type="number" th:field="*{aantal}" /></label>
+			<input type="number" th:field="*{aantal}" />
+			<span th:if="${#fields.hasErrors('aantal')}" th:errors="*{aantal}"></span></label>
 			<input type="hidden" name="bierId" th:value="${bier.id}" />
 			<input type="submit" value="Toevoegen" />
 		</form>

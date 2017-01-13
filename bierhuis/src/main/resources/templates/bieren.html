@@ -8,7 +8,7 @@
 		<div th:include="fragments/menu :: menu"></div>
 		<h1 th:text="${brouwer.naam}+'('+${brouwer.adres.gemeente}+')'"></h1>
 		<ul>
-			<li th:each="bier : ${bieren}"><a th:href="@{'/brouwers/bieren/'+${bier.naam}}" th:text="${bier.naam}"></a></li>
+			<li th:each="bier : ${bieren}"><a th:href="@{'/brouwers/bieren/'+${bier.id}}" th:text="${bier.naam}"></a></li>
 		</ul>
 	</body>
 </html>

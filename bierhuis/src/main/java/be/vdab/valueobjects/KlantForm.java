@@ -4,17 +4,21 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 
 public class KlantForm {
 	@NotBlank
+	@SafeHtml
 	private String naam;
 	@NotBlank
+	@SafeHtml
 	private String straat;
 	@Pattern(regexp="\\d.*")
 	private String huisNr;
 	@Range(min = 1000, max = 9999)
 	private int postcode;
 	@NotBlank
+	@SafeHtml
 	private String gemeente;
 	
 	public String getNaam() {

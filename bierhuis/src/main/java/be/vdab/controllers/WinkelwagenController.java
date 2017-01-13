@@ -32,6 +32,7 @@ class WinkelwagenController {
 	private final static String GET_VIEW = "winkelwagen";
 	private final static String BEVESTIG_VIEW = "bevestigen";
 	private final static String BEVESTIG_REDIRECT = "redirect:/winkelwagen/bevestiging/{id}";
+	private final static String BIER_VIEW = "bier";
 	private final BierService bierService;
 	private final BestelbonService bestelbonService;
 	
@@ -44,7 +45,11 @@ class WinkelwagenController {
 	@PostMapping("bevestiging")
 	ModelAndView sendToConfirm(@Valid KlantForm klantForm,BindingResult bindingResult,RedirectAttributes redirectAttributes){
 		if (bindingResult.hasErrors()) {
-			return new ModelAndView(VIEW);
+			List<Bestelbonlijn> lijnen = mandje.getMandje();
+			if (lijnen == null) {
+				lijnen = new ArrayList<>();
+			}
+			return new ModelAndView(GET_VIEW,"lijnen",lijnen).addObject(klantForm);
 		}
 		Bestelbon bestelbon = new Bestelbon(klantForm.getNaam(), klantForm.getStraat(), klantForm.getHuisNr(), klantForm.getPostcode(), klantForm.getGemeente(), mandje.getMandje());
 		bestelbon = bestelbonService.create(bestelbon);
@@ -62,8 +67,8 @@ class WinkelwagenController {
 	@PostMapping(params = {"aantal","bierId"})
 	ModelAndView winkelwagen(@Valid AantalForm aantalForm,BindingResult bindingResult){
 		if (bindingResult.hasErrors()) {
-			String biernaam = bierService.read(aantalForm.getBierId()).getNaam();
-			return new ModelAndView("redirect:/brouwers/bieren/"+biernaam);
+			Bier bier = bierService.read(aantalForm.getBierId());
+			return new ModelAndView(BIER_VIEW,"bier",bier).addObject(aantalForm);
 		}
 		if (aantalForm != null) {
 			Bier bier = bierService.read(aantalForm.getBierId());

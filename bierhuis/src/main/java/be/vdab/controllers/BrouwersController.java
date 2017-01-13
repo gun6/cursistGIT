@@ -32,9 +32,9 @@ class BrouwersController {
 		return new ModelAndView(BROUWERS_VIEW,"brouwers",brouwerService.findAll());
 	}
 	
-	@GetMapping("bieren/{biernaam}")
-	ModelAndView bier(@PathVariable String biernaam){
-		Bier bier = bierService.findByNaam(biernaam);
+	@GetMapping("bieren/{bierid}")
+	ModelAndView bier(@PathVariable String bierid){
+		Bier bier = bierService.read(Long.parseLong(bierid));
 		AantalForm aantalForm = new AantalForm();
 		aantalForm.setAantal(1);
 		return new ModelAndView(BIER_VIEW,"bier",bier).addObject(aantalForm);
