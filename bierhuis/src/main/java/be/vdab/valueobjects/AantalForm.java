@@ -1,6 +1,9 @@
 package be.vdab.valueobjects;
 
+import javax.validation.constraints.Min;
+
 public class AantalForm {
+	@Min(1)
 	private int aantal;
 	private long bierId;
 	

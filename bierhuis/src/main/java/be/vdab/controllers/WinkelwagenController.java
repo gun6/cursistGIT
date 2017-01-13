@@ -3,7 +3,10 @@ package be.vdab.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +28,7 @@ import be.vdab.web.Mandje;
 @RequestMapping("/winkelwagen")
 class WinkelwagenController {
 	private final Mandje mandje;
-	private final static String VIEW = "redirect:winkelwagen";
+	private final static String VIEW = "redirect:/winkelwagen";
 	private final static String GET_VIEW = "winkelwagen";
 	private final static String BEVESTIG_VIEW = "bevestigen";
 	private final static String BEVESTIG_REDIRECT = "redirect:/winkelwagen/bevestiging/{id}";
@@ -39,7 +42,10 @@ class WinkelwagenController {
 	}
 	
 	@PostMapping("bevestiging")
-	ModelAndView sendToConfirm(KlantForm klantForm,RedirectAttributes redirectAttributes){
+	ModelAndView sendToConfirm(@Valid KlantForm klantForm,BindingResult bindingResult,RedirectAttributes redirectAttributes){
+		if (bindingResult.hasErrors()) {
+			return new ModelAndView(VIEW);
+		}
 		Bestelbon bestelbon = new Bestelbon(klantForm.getNaam(), klantForm.getStraat(), klantForm.getHuisNr(), klantForm.getPostcode(), klantForm.getGemeente(), mandje.getMandje());
 		bestelbon = bestelbonService.create(bestelbon);
 		long id = bestelbon.getId();
@@ -54,7 +60,11 @@ class WinkelwagenController {
 	}
 
 	@PostMapping(params = {"aantal","bierId"})
-	ModelAndView winkelwagen(AantalForm aantalForm){
+	ModelAndView winkelwagen(@Valid AantalForm aantalForm,BindingResult bindingResult){
+		if (bindingResult.hasErrors()) {
+			String biernaam = bierService.read(aantalForm.getBierId()).getNaam();
+			return new ModelAndView("redirect:/brouwers/bieren/"+biernaam);
+		}
 		if (aantalForm != null) {
 			Bier bier = bierService.read(aantalForm.getBierId());
 			Bestelbonlijn bestelbonlijn = new Bestelbonlijn(aantalForm.getAantal(), bier.getPrijs(), bier);

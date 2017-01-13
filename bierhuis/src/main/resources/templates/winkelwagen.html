@@ -4,7 +4,7 @@
 		<title>Winkelwagen</title>
 		<th:block th:include="fragments/links :: links"></th:block>
 	</head>
-	<body>
+	<body onload="som()">
 		<div th:include="fragments/menu :: menu"></div>
 		<h1>Winkelwagen</h1>
 		<table>
@@ -23,16 +23,30 @@
 			<tr>
 				<td colspan="2"></td>
 				<td>totaal:</td>
-				<td class="total"></td>
+				<td id="total"></td>
 			</tr>
 		</table>
 		<form th:action="@{/winkelwagen/bevestiging}" th:object="${klantForm}" method="post">
-			<label>Naam<input type="text" th:field="*{naam}" /></label>
+			<label>Naam<input type="text" th:field="*{naam}" />
+			<th:block th:if="${#fields.hasErrors('naam')}" th:errors="*{naam}"></th:block></label>
 			<label>Straat<input type="text" th:field="*{straat}" /></label>
 			<label>Huisnummer<input type="text" th:field="*{huisNr}" /></label>
 			<label>Postcode<input type="number" th:field="*{postcode}" /></label>
 			<label>Gemeente<input type="text" th:field="*{gemeente}" /></label>
 			<input type="submit" value="Als bestelbon bevestigen" />
 		</form>
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+			function som(){
+				var resultaat = 0,
+ 				nodeList = document.getElementsByClassName("part"),
+ 				lengte = nodeList.length;
+				for (var i = 0; i < lengte; i++){
+					resultaat += parseInt(nodeList[i].innerHTML);
+				}
+				document.getElementById("total").innerHTML = resultaat;
+			}
+			/*]]>*/
+		</script>
 	</body>
 </html>

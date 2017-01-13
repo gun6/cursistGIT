@@ -1,10 +1,20 @@
 package be.vdab.valueobjects;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
+
 public class KlantForm {
+	@NotBlank
 	private String naam;
+	@NotBlank
 	private String straat;
+	@Pattern(regexp="\\d.*")
 	private String huisNr;
+	@Range(min = 1000, max = 9999)
 	private int postcode;
+	@NotBlank
 	private String gemeente;
 	
 	public String getNaam() {
