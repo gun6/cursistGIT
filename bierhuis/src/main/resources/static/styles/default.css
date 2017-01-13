@@ -1,5 +1,13 @@
 @CHARSET "ISO-8859-1";
 
 body {
-    background-color: #d5bf2b;
+    background-color: #F7FFCC;
+    color: #003300;
+    font-family: sans-serif;
+}
+input, select {
+	display: block;
+	font-size: 1.1em;
+	margin-bottom: 1em;
+	margin-top: 0.2em;
 }

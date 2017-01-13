@@ -27,15 +27,15 @@
 			</tr>
 		</table>
 		<form th:action="@{/winkelwagen/bevestiging}" th:object="${klantForm}" method="post">
-			<label>Naam<input type="text" th:field="*{naam}" />
+			<label>Naam<input type="text" th:field="*{naam}" autofocus="autofocus" required="required"/>
 			<span th:if="${#fields.hasErrors('naam')}" th:errors="*{naam}"></span></label>
-			<label>Straat<input type="text" th:field="*{straat}" />
+			<label>Straat<input type="text" th:field="*{straat}" required="required"/>
 			<span th:if="${#fields.hasErrors('straat')}" th:errors="*{straat}"></span></label>
-			<label>Huisnummer<input type="text" th:field="*{huisNr}" />
+			<label>Huisnummer<input type="text" th:field="*{huisNr}" required="required"/>
 			<span th:if="${#fields.hasErrors('huisNr')}" th:errors="*{huisNr}"></span></label>
-			<label>Postcode<input type="number" th:field="*{postcode}" />
+			<label>Postcode<input type="number" th:field="*{postcode}" min="1000" max="9999"/>
 			<span th:if="${#fields.hasErrors('postcode')}" th:errors="*{postcode}"></span></label>
-			<label>Gemeente<input type="text" th:field="*{gemeente}" />
+			<label>Gemeente<input type="text" th:field="*{gemeente}" required="required"/>
 			<span th:if="${#fields.hasErrors('gemeente')}" th:errors="*{gemeente}"></span></label>
 			<input type="submit" value="Als bestelbon bevestigen" />
 		</form>
